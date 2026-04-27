@@ -22,4 +22,5 @@ model User {
 model Produk {
   id          Int           @id @default(autoincrement())
   nama        String
+  harga       Int
 }

@@ -31,4 +31,5 @@ model Transaksi {
   produk      Produk        @relation(fields: [produkId], references: [id])
   produkId    Int
   namaPembeli String
+  emailPembeli String
 }

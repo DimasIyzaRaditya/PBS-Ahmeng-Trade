@@ -25,3 +25,6 @@ model Produk {
   harga       Int
   transaksi   Transaksi[]
 }
+
+model Transaksi {
+}

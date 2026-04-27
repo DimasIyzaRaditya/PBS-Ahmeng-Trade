@@ -33,4 +33,5 @@ model Transaksi {
   namaPembeli String
   emailPembeli String
   totalHarga  Int
+  createdAt   DateTime      @default(now()) @db.Timestamp
 }

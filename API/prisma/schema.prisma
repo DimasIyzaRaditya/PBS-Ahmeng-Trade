@@ -30,4 +30,5 @@ model Transaksi {
   id          Int           @id @default(autoincrement())
   produk      Produk        @relation(fields: [produkId], references: [id])
   produkId    Int
+  namaPembeli String
 }

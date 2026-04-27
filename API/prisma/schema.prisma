@@ -32,4 +32,5 @@ model Transaksi {
   produkId    Int
   namaPembeli String
   emailPembeli String
+  totalHarga  Int
 }

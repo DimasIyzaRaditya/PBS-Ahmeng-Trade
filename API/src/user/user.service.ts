@@ -10,6 +10,13 @@ export class UserService {
 
   // buat fungsi tambah data user
   async create(createUserDto: CreateUserDto) {
+    // simpan data user baru
+    await this.prisma.user.create({
+      data: {
+      },
+    });
+
+    // tampilan respon
 
   }
 

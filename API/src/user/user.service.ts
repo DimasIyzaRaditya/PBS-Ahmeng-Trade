@@ -22,6 +22,7 @@ export class UserService {
     // tampilan respon
     return {
       success: true,
+      message: 'Berhasil menyimpan data user',
     };
   }
 

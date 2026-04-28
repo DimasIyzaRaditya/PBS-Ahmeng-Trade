@@ -38,6 +38,7 @@ export class UserService {
     return {
       success: true,
       message: 'Berhasil mengambil semua data user',
+      data: data,
     };
   }
 

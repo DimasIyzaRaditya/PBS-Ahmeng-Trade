@@ -15,6 +15,7 @@ export class UserService {
       data: {
         name: createUserDto.name,
         username: createUserDto.username,
+        password: createUserDto.password,
       },
     });
 

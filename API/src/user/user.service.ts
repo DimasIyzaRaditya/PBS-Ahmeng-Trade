@@ -34,6 +34,10 @@ export class UserService {
     // ambil semua data user dari database
     const data = await this.prisma.user.findMany();
 
+    // tampilan respon
+    return {
+      success: true,
+    };
   }
 
   // buat fungsi ambil data user berdasarkan id

@@ -54,6 +54,10 @@ export class UserService {
       },
     });
 
+    // tampilan respon
+    return {
+      success: true,
+    };
   }
 
   update(id: number, updateUserDto: UpdateUserDto) {

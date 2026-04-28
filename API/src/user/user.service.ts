@@ -31,6 +31,8 @@ export class UserService {
 
   // buat fungsi ambil semua data user
   async findAll() {
+    // ambil semua data user dari database
+    const data = await this.prisma.user.findMany();
 
   }
 

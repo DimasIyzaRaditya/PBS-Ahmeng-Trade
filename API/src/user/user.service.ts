@@ -20,7 +20,9 @@ export class UserService {
     });
 
     // tampilan respon
-
+    return {
+      success: true,
+    };
   }
 
   findAll() {

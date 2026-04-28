@@ -13,6 +13,8 @@ export class UserService {
     // simpan data user baru
     await this.prisma.user.create({
       data: {
+        name: createUserDto.name,
+
       },
     });
 

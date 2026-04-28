@@ -59,6 +59,9 @@ export class UserService {
       success: true,
       message: 'Berhasil mengambil data user',
       data: data,
+      metadata: {
+        status: HttpStatus.OK,
+      },
     };
   }
 

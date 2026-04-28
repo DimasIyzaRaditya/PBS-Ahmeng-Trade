@@ -29,12 +29,14 @@ export class UserService {
     };
   }
 
-  findAll() {
-    return `This action returns all user`;
+  // buat fungsi ambil semua data user
+  async findAll() {
+
   }
 
-  findOne(id: number) {
-    return `This action returns a #${id} user`;
+  // buat fungsi ambil data user berdasarkan id
+  async findOne(id: number) {
+
   }
 
   update(id: number, updateUserDto: UpdateUserDto) {

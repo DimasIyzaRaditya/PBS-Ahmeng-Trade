@@ -47,6 +47,12 @@ export class UserService {
 
   // buat fungsi ambil data user berdasarkan id
   async findOne(id: number) {
+    // cari data user berdasarkan id
+    const data = await this.prisma.user.findUnique({
+      where: {
+        id: id,
+      },
+    });
 
   }
 

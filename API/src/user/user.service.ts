@@ -57,6 +57,7 @@ export class UserService {
     // tampilan respon
     return {
       success: true,
+      message: 'Berhasil mengambil data user',
     };
   }
 

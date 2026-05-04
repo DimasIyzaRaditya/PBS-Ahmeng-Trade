@@ -4,7 +4,7 @@ import { View, Text, StyleSheet } from 'react-native';
 export default function RegisterScreen({ navigation }) {
   return (
     <View style={styles.container}>
-      <Text>Daftar Akun</Text>
+      <Text style={styles.judul}>Daftar Akun</Text>
     </View>
   );
 }
@@ -15,5 +15,12 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     padding: 24,
     backgroundColor: '#fff',
+  },
+  judul: {
+    fontSize: 28,
+    fontWeight: 'bold',
+    textAlign: 'center',
+    marginBottom: 32,
+    color: '#4F46E5',
   },
 });

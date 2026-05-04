@@ -1,9 +1,14 @@
 import React, { useState } from 'react';
-import { View, Text, TextInput, StyleSheet } from 'react-native';
+import { View, Text, TextInput, TouchableOpacity, StyleSheet } from 'react-native';
 
 export default function LoginScreen({ navigation }) {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+
+  const handleLogin = () => {
+    // dummy dulu, nanti konek API
+    console.log('Login:', email, password);
+  };
 
   return (
     <View style={styles.container}>
@@ -25,6 +30,9 @@ export default function LoginScreen({ navigation }) {
         onChangeText={setPassword}
         secureTextEntry={true}
       />
+      <TouchableOpacity style={styles.button} onPress={handleLogin}>
+        <Text style={styles.buttonText}>Masuk</Text>
+      </TouchableOpacity>
     </View>
   );
 }
@@ -57,5 +65,17 @@ const styles = StyleSheet.create({
     marginBottom: 16,
     fontSize: 15,
     backgroundColor: '#F9FAFB',
+  },
+  button: {
+    backgroundColor: '#4F46E5',
+    padding: 14,
+    borderRadius: 10,
+    alignItems: 'center',
+    marginTop: 8,
+  },
+  buttonText: {
+    color: '#fff',
+    fontSize: 16,
+    fontWeight: '600',
   },
 });

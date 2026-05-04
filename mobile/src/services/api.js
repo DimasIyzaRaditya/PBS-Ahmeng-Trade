@@ -15,3 +15,7 @@ export const apiRegister = async (nama, email, password) => {
 export const apiGetUser = async () => {
   return {};
 };
+
+export const apiGetTransaksi = async () => {
+  return [];
+};

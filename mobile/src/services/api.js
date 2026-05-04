@@ -11,3 +11,7 @@ export const apiGetProduk = async () => {
 export const apiRegister = async (nama, email, password) => {
   return { token: 'dummy-token', user: { nama, email } };
 };
+
+export const apiGetUser = async () => {
+  return {};
+};

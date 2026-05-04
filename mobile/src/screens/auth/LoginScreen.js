@@ -6,7 +6,6 @@ export default function LoginScreen({ navigation }) {
   const [password, setPassword] = useState('');
 
   const handleLogin = () => {
-    // dummy dulu, nanti konek API
     console.log('Login:', email, password);
   };
 
@@ -32,6 +31,10 @@ export default function LoginScreen({ navigation }) {
       />
       <TouchableOpacity style={styles.button} onPress={handleLogin}>
         <Text style={styles.buttonText}>Masuk</Text>
+      </TouchableOpacity>
+
+      <TouchableOpacity onPress={() => navigation.navigate('Register')}>
+        <Text style={styles.linkText}>Belum punya akun? Daftar di sini</Text>
       </TouchableOpacity>
     </View>
   );
@@ -77,5 +80,11 @@ const styles = StyleSheet.create({
     color: '#fff',
     fontSize: 16,
     fontWeight: '600',
+  },
+  linkText: {
+    textAlign: 'center',
+    marginTop: 16,
+    color: '#4F46E5',
+    fontSize: 14,
   },
 });

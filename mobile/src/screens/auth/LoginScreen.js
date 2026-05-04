@@ -17,6 +17,14 @@ export default function LoginScreen({ navigation }) {
         keyboardType="email-address"
         autoCapitalize="none"
       />
+      <Text style={styles.label}>Password</Text>
+      <TextInput
+        style={styles.input}
+        placeholder="Masukkan password kamu"
+        value={password}
+        onChangeText={setPassword}
+        secureTextEntry={true}
+      />
     </View>
   );
 }

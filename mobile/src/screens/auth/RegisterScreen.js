@@ -7,7 +7,6 @@ export default function RegisterScreen({ navigation }) {
   const [password, setPassword] = useState('');
 
   const handleRegister = () => {
-    // dummy dulu, nanti konek API
     console.log('Register:', nama, email, password);
   };
 
@@ -40,6 +39,10 @@ export default function RegisterScreen({ navigation }) {
       />
       <TouchableOpacity style={styles.button} onPress={handleRegister}>
         <Text style={styles.buttonText}>Daftar</Text>
+      </TouchableOpacity>
+
+      <TouchableOpacity onPress={() => navigation.navigate('Login')}>
+        <Text style={styles.linkText}>Sudah punya akun? Masuk di sini</Text>
       </TouchableOpacity>
     </View>
   );
@@ -85,5 +88,11 @@ const styles = StyleSheet.create({
     color: '#fff',
     fontSize: 16,
     fontWeight: '600',
+  },
+  linkText: {
+    textAlign: 'center',
+    marginTop: 16,
+    color: '#4F46E5',
+    fontSize: 14,
   },
 });

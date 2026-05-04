@@ -23,3 +23,11 @@ export const apiGetTransaksi = async () => {
 export const apiTambahTransaksi = async (data) => {
   return { success: true, data };
 };
+
+export const apiHapusProduk = async (id) => {
+  return { success: true };
+};
+
+export const apiUpdateProduk = async (id, data) => {
+  return { success: true, data };
+};

@@ -19,3 +19,7 @@ export const apiGetUser = async () => {
 export const apiGetTransaksi = async () => {
   return [];
 };
+
+export const apiTambahTransaksi = async (data) => {
+  return { success: true, data };
+};

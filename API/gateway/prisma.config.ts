@@ -9,6 +9,7 @@ export default defineConfig({
     path: "prisma/migrations",
   },
   datasource: {
-    url: process.env["DATABASE_URL"],
+    // hanya untuk generate client, runtime connection pakai PrismaXxxService
+    url: process.env["USER_DATABASE_URL"],
   },
 });

@@ -1,7 +1,9 @@
 import { Injectable, HttpStatus } from '@nestjs/common';
 import { CreateUserDto } from './dto/create-user.dto';
+import { formatResponse } from '../utils/response.util';
 import { UpdateUserDto } from './dto/update-user.dto';
 import { PrismaService } from '../prisma.service.js';
+import * as bcrypt from 'bcryptjs';
 
 @Injectable()
 export class UserService {
@@ -10,23 +12,20 @@ export class UserService {
 
   // buat fungsi tambah data user
   async create(createUserDto: CreateUserDto) {
+    // hash password sebelum disimpan
+    const hashedPassword = await bcrypt.hash(createUserDto.password, 10);
+
     // simpan data user baru
     await this.prisma.user.create({
       data: {
         name: createUserDto.name,
         username: createUserDto.username,
-        password: createUserDto.password,
+        password: hashedPassword,
       },
     });
 
     // tampilan respon
-    return {
-      success: true,
-      message: 'Berhasil menyimpan data user',
-      metadata: {
-        status: HttpStatus.CREATED,
-      },
-    };
+    return formatResponse('Berhasil menyimpan data user', undefined, HttpStatus.CREATED);
   }
 
   // buat fungsi ambil semua data user
@@ -35,14 +34,7 @@ export class UserService {
     const data = await this.prisma.user.findMany();
 
     // tampilan respon
-    return {
-      success: true,
-      message: 'Berhasil mengambil semua data user',
-      data: data,
-      metadata: {
-        status: HttpStatus.OK,
-      },
-    };
+    return formatResponse('Berhasil mengambil semua data user', data);
   }
 
   // buat fungsi ambil data user berdasarkan id
@@ -55,14 +47,7 @@ export class UserService {
     });
 
     // tampilan respon
-    return {
-      success: true,
-      message: 'Berhasil mengambil data user',
-      data: data,
-      metadata: {
-        status: HttpStatus.OK,
-      },
-    };
+    return formatResponse('Berhasil mengambil data user', data);
   }
 
   // buat fungsi update data user berdasarkan id
@@ -80,14 +65,7 @@ export class UserService {
     });
 
     // tampilan respon
-    return {
-      success: true,
-      message: 'Berhasil mengupdate data user',
-      data: data,
-      metadata: {
-        status: HttpStatus.OK,
-      },
-    };
+    return formatResponse('Berhasil mengupdate data user', data);
   }
 
   // buat fungsi hapus data user berdasarkan id
@@ -100,13 +78,6 @@ export class UserService {
     });
 
     // tampilan respon
-    return {
-      success: true,
-      message: 'Berhasil menghapus data user',
-      data: data,
-      metadata: {
-        status: HttpStatus.OK,
-      },
-    };
+    return formatResponse('Berhasil menghapus data user', data);
   }
 }

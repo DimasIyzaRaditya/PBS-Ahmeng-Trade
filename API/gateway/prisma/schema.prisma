@@ -1,7 +1,9 @@
-// This is your Prisma schema file,
-// learn more about it in the docs: https://pris.ly/d/prisma-schema
-
-// Get a free hosted Postgres database in seconds: `npx create-db`
+// Gateway schema — berisi semua model untuk generate Prisma client lengkap.
+// Runtime connection diatur oleh masing-masing PrismaXxxService via env var.
+// Setiap service memiliki database terpisah:
+//   - User      -> db_user      (USER_DATABASE_URL)
+//   - Produk    -> db_produk    (PRODUK_DATABASE_URL)
+//   - Transaksi -> db_transaksi (TRANSAKSI_DATABASE_URL)
 
 generator client {
   provider = "prisma-client-js"
@@ -13,25 +15,24 @@ datasource db {
 }
 
 model User {
-  id          Int           @id @default(autoincrement())
-  name        String
-  username    String        @unique
-  password    String
+  id       Int    @id @default(autoincrement())
+  name     String
+  username String @unique
+  password String
 }
 
 model Produk {
-  id          Int           @id @default(autoincrement())
-  nama        String
-  harga       Int
-  transaksi   Transaksi[]
+  id    Int    @id @default(autoincrement())
+  nama  String
+  harga Int
 }
 
+// produkId adalah referensi logis ke db_produk (lintas database)
 model Transaksi {
-  id          Int           @id @default(autoincrement())
-  produk      Produk        @relation(fields: [produkId], references: [id])
-  produkId    Int
-  namaPembeli String
+  id           Int      @id @default(autoincrement())
+  produkId     Int
+  namaPembeli  String
   emailPembeli String
-  totalHarga  Int
-  createdAt   DateTime      @default(now()) @db.Timestamp
+  totalHarga   Int
+  createdAt    DateTime @default(now()) @db.Timestamp
 }

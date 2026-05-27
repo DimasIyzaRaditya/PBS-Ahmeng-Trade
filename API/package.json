@@ -1,0 +1,19 @@
+{
+  "name": "api",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "dev": "concurrently --kill-others-on-fail -n \"GATEWAY,USER,PRODUK,TRANSAKSI\" -c \"bgBlue.bold,bgGreen.bold,bgYellow.bold,bgMagenta.bold\" \"npm run start:dev --prefix gateway\" \"npm run start:dev --prefix user\" \"npm run start:dev --prefix produk\" \"npm run start:dev --prefix transaksi\"",
+    "start": "concurrently --kill-others-on-fail -n \"GATEWAY,USER,PRODUK,TRANSAKSI\" -c \"bgBlue.bold,bgGreen.bold,bgYellow.bold,bgMagenta.bold\" \"npm run start --prefix gateway\" \"npm run start --prefix user\" \"npm run start --prefix produk\" \"npm run start --prefix transaksi\"",
+    "build": "concurrently -n \"GATEWAY,USER,PRODUK,TRANSAKSI\" \"npm run build --prefix gateway\" \"npm run build --prefix user\" \"npm run build --prefix produk\" \"npm run build --prefix transaksi\"",
+    "kill": "powershell -Command \"Get-Process -Name node -ErrorAction SilentlyContinue | Stop-Process -Force; Write-Host 'Semua proses Node.js dihentikan'\""
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "commonjs",
+  "devDependencies": {
+    "concurrently": "^9.2.1"
+  }
+}

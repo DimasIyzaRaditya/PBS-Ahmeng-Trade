@@ -1,0 +1,21 @@
+# =============================
+# Root API workspace (concurrently)
+# =============================
+node_modules/
+package-lock.json
+
+# =============================
+# Logs
+# =============================
+logs/
+*.log
+npm-debug.log*
+
+# =============================
+# Editor & OS
+# =============================
+.DS_Store
+Thumbs.db
+.vscode/*
+!.vscode/extensions.json
+!.vscode/settings.json

@@ -6,11 +6,12 @@ import {
 } from '@nestjs/common';
 import { CreateTransaksiDto } from './dto/create-transaksi.dto';
 import { UpdateTransaksiDto } from './dto/update-transaksi.dto';
+import { formatResponse } from '../utils/response.util';
 import { PrismaService } from '../prisma.service';
 
 @Injectable()
 export class TransaksiService {
-  constructor(private readonly prisma: PrismaService) {}
+  constructor(private readonly prisma: PrismaService) { }
 
   // validasi apakah produk benar-benar ada di service produk
   private async validateProduk(produkId: number): Promise<void> {
@@ -64,23 +65,14 @@ export class TransaksiService {
       },
     });
 
-    return {
-      success: true,
-      message: 'Berhasil menyimpan data transaksi',
-      metadata: { status: HttpStatus.CREATED },
-    };
+    return formatResponse('Berhasil menyimpan data transaksi', undefined, HttpStatus.CREATED);
   }
 
   // buat fungsi ambil semua data transaksi
   async findAll() {
     const data = await this.prisma.transaksi.findMany();
 
-    return {
-      success: true,
-      message: 'Berhasil mengambil semua data transaksi',
-      data: data,
-      metadata: { status: HttpStatus.OK },
-    };
+    return formatResponse('Berhasil mengambil semua data transaksi', data);
   }
 
   // buat fungsi ambil data transaksi berdasarkan id
@@ -89,12 +81,7 @@ export class TransaksiService {
       where: { id: id },
     });
 
-    return {
-      success: true,
-      message: 'Berhasil mengambil data transaksi',
-      data: data,
-      metadata: { status: HttpStatus.OK },
-    };
+    return formatResponse('Berhasil mengambil data transaksi', data);
   }
 
   // buat fungsi update data transaksi berdasarkan id
@@ -114,12 +101,7 @@ export class TransaksiService {
       },
     });
 
-    return {
-      success: true,
-      message: 'Berhasil mengupdate data transaksi',
-      data: data,
-      metadata: { status: HttpStatus.OK },
-    };
+    return formatResponse('Berhasil mengupdate data transaksi', data);
   }
 
   // buat fungsi hapus data transaksi berdasarkan id
@@ -128,12 +110,7 @@ export class TransaksiService {
       where: { id: id },
     });
 
-    return {
-      success: true,
-      message: 'Berhasil menghapus data transaksi',
-      data: data,
-      metadata: { status: HttpStatus.OK },
-    };
+    return formatResponse('Berhasil menghapus data transaksi', data);
   }
 }
 

@@ -1,11 +1,12 @@
 import { Injectable, HttpStatus } from '@nestjs/common';
 import { CreateProdukDto } from './dto/create-produk.dto';
+import { formatResponse } from '../utils/response.util';
 import { UpdateProdukDto } from './dto/update-produk.dto';
 import { PrismaService } from '../prisma.service';
 
 @Injectable()
 export class ProdukService {
-  constructor(private readonly prisma: PrismaService) {}
+  constructor(private readonly prisma: PrismaService) { }
 
   // buat fungsi tambah data produk
   async create(createProdukDto: CreateProdukDto) {
@@ -16,23 +17,14 @@ export class ProdukService {
       },
     });
 
-    return {
-      success: true,
-      message: 'Berhasil menyimpan data produk',
-      metadata: { status: HttpStatus.CREATED },
-    };
+    return formatResponse('Berhasil menyimpan data produk', undefined, HttpStatus.CREATED);
   }
 
   // buat fungsi ambil semua data produk
   async findAll() {
     const data = await this.prisma.produk.findMany();
 
-    return {
-      success: true,
-      message: 'Berhasil mengambil semua data produk',
-      data: data,
-      metadata: { status: HttpStatus.OK },
-    };
+    return formatResponse('Berhasil mengambil semua data produk', data);
   }
 
   // buat fungsi ambil data produk berdasarkan id
@@ -41,12 +33,7 @@ export class ProdukService {
       where: { id: id },
     });
 
-    return {
-      success: true,
-      message: 'Berhasil mengambil data produk',
-      data: data,
-      metadata: { status: HttpStatus.OK },
-    };
+    return formatResponse('Berhasil mengambil data produk', data);
   }
 
   // buat fungsi update data produk berdasarkan id
@@ -59,12 +46,7 @@ export class ProdukService {
       },
     });
 
-    return {
-      success: true,
-      message: 'Berhasil mengupdate data produk',
-      data: data,
-      metadata: { status: HttpStatus.OK },
-    };
+    return formatResponse('Berhasil mengupdate data produk', data);
   }
 
   // buat fungsi hapus data produk berdasarkan id
@@ -73,11 +55,6 @@ export class ProdukService {
       where: { id: id },
     });
 
-    return {
-      success: true,
-      message: 'Berhasil menghapus data produk',
-      data: data,
-      metadata: { status: HttpStatus.OK },
-    };
+    return formatResponse('Berhasil menghapus data produk', data);
   }
 }

@@ -1,0 +1,18 @@
+import { Injectable, OnModuleInit } from '@nestjs/common';
+import { PrismaClient } from '../generated/prisma/index.js';
+import { PrismaPg } from '@prisma/adapter-pg';
+import * as dotenv from 'dotenv';
+dotenv.config();
+
+@Injectable()
+export class PrismaProdukService extends PrismaClient implements OnModuleInit {
+  constructor() {
+    const adapter = new PrismaPg({
+      connectionString: process.env.PRODUK_DATABASE_URL as string,
+    });
+    super({ adapter });
+  }
+  async onModuleInit() {
+    await this.$connect();
+  }
+}

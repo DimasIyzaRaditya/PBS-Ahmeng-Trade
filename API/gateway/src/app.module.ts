@@ -4,10 +4,12 @@ import { AppService } from './app.service';
 import { UserModule } from './user/user.module';
 import { ProdukModule } from './produk/produk.module';
 import { TransaksiModule } from './transaksi/transaksi.module';
+import { AuthModule } from './auth/auth.module';
 
 @Module({
-  imports: [UserModule, ProdukModule, TransaksiModule],
+  imports: [AuthModule, UserModule, ProdukModule, TransaksiModule],
   controllers: [AppController],
   providers: [AppService],
 })
 export class AppModule {}
+

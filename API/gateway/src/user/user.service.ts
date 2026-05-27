@@ -1,12 +1,12 @@
 import { Injectable, HttpStatus } from '@nestjs/common';
 import { CreateUserDto } from './dto/create-user.dto';
 import { UpdateUserDto } from './dto/update-user.dto';
-import { PrismaService } from '../prisma.service.js';
+import { PrismaUserService } from '../prisma-user.service.js';
 
 @Injectable()
 export class UserService {
   // buat construktor untuk prisma
-  constructor(private readonly prisma: PrismaService) { }
+  constructor(private readonly prisma: PrismaUserService) { }
 
   // buat fungsi tambah data user
   async create(createUserDto: CreateUserDto) {

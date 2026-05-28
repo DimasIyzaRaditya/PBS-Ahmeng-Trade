@@ -11,7 +11,13 @@ export const apiLogin = async (email, password) => {
 };
 
 export const apiRegister = async (nama, email, password) => {
-  return { token: 'dummy-token', user: { nama, email } };
+  const res = await fetch(`${BASE_URL}/register`, {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ nama, email, password }),
+  });
+  if (!res.ok) throw new Error('Registrasi gagal');
+  return await res.json();
 };
 
 export const apiGetProduk = async () => {

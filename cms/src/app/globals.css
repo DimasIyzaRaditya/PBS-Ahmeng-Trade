@@ -38,5 +38,5 @@
 body {
   background: #0a0a0a;
   color: #fafafa;
-
+  font-family: var(--font-geist-sans), system-ui, -apple-system, sans-serif;
 }

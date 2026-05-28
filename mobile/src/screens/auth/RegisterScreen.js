@@ -1,15 +1,23 @@
 import React, { useState } from 'react';
-import { View, Text, TextInput, TouchableOpacity, StyleSheet } from 'react-native';
+import { View, Text, TextInput, TouchableOpacity, StyleSheet, Alert, ActivityIndicator } from 'react-native';
 import { useAuth } from '../../context/AuthContext';
 
 export default function RegisterScreen({ navigation }) {
   const [nama, setNama] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const [loading, setLoading] = useState(false);
   const { register } = useAuth();
 
   const handleRegister = async () => {
-    await register(nama, email, password);
+    try {
+      setLoading(true);
+      await register(nama, email, password);
+    } catch (error) {
+      Alert.alert('Registrasi Gagal', 'Periksa kembali data kamu');
+    } finally {
+      setLoading(false);
+    }
   };
 
   return (
@@ -40,7 +48,7 @@ export default function RegisterScreen({ navigation }) {
         secureTextEntry={true}
       />
       <TouchableOpacity style={styles.button} onPress={handleRegister}>
-        <Text style={styles.buttonText}>Daftar</Text>
+        {loading ? <ActivityIndicator color="#fff" /> : <Text style={styles.buttonText}>Daftar</Text>}
       </TouchableOpacity>
       <TouchableOpacity onPress={() => navigation.navigate('Login')}>
         <Text style={styles.linkText}>Sudah punya akun? Masuk di sini</Text>

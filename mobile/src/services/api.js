@@ -1,7 +1,7 @@
-const BASE_URL = 'http://192.168.1.7:3000/api';
+const BASE_URL = 'http://192.168.1.7:3000';
 
 export const apiLogin = async (email, password) => {
-  const res = await fetch(`${BASE_URL}/login`, {
+  const res = await fetch(`${BASE_URL}/auth/login`, {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify({ email, password }),
@@ -11,7 +11,7 @@ export const apiLogin = async (email, password) => {
 };
 
 export const apiRegister = async (nama, email, password) => {
-  const res = await fetch(`${BASE_URL}/register`, {
+  const res = await fetch(`${BASE_URL}/user`, {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify({ nama, email, password }),

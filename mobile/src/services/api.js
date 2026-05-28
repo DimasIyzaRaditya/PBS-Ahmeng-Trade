@@ -60,8 +60,13 @@ export const apiTambahTransaksi = async (token, data) => {
   return await res.json();
 };
 
-export const apiHapusProduk = async (id) => {
-  return { success: true };
+export const apiHapusProduk = async (token, id) => {
+  const res = await fetch(`${BASE_URL}/produk/${id}`, {
+    method: 'DELETE',
+    headers: { Authorization: `Bearer ${token}` },
+  });
+  if (!res.ok) throw new Error('Gagal hapus produk');
+  return await res.json();
 };
 
 export const apiUpdateProduk = async (id, data) => {

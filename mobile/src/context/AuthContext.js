@@ -45,9 +45,11 @@ export const AuthProvider = ({ children }) => {
     await AsyncStorage.setItem('user', JSON.stringify(res.user));
   };
 
-  const logout = () => {
+  const logout = async () => {
     setUser(null);
     setToken(null);
+    await AsyncStorage.removeItem('token');
+    await AsyncStorage.removeItem('user');
   };
 
   return (

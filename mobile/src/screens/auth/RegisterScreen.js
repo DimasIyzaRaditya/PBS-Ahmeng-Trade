@@ -10,6 +10,10 @@ export default function RegisterScreen({ navigation }) {
   const { register } = useAuth();
 
   const handleRegister = async () => {
+    if (!nama || !email || !password) {
+      Alert.alert('Peringatan', 'Semua field harus diisi');
+      return;
+    }
     try {
       setLoading(true);
       await register(nama, email, password);

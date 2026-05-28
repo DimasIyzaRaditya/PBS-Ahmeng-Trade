@@ -9,6 +9,10 @@ export default function LoginScreen({ navigation }) {
   const { login } = useAuth();
 
   const handleLogin = async () => {
+    if (!email || !password) {
+      Alert.alert('Peringatan', 'Email dan password tidak boleh kosong');
+      return;
+    }
     try {
       setLoading(true);
       await login(email, password);

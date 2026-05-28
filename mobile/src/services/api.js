@@ -20,8 +20,13 @@ export const apiRegister = async (nama, email, password) => {
   return await res.json();
 };
 
-export const apiGetProduk = async () => {
-  return [];
+export const apiGetProduk = async (token) => {
+  const res = await fetch(`${BASE_URL}/produk`, {
+    method: 'GET',
+    headers: { Authorization: `Bearer ${token}` },
+  });
+  if (!res.ok) throw new Error('Gagal ambil data produk');
+  return await res.json();
 };
 
 export const apiGetUser = async () => {

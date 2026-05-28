@@ -6,6 +6,7 @@ export default function RegisterScreen({ navigation }) {
   const [nama, setNama] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const { register } = useAuth();
 
   const handleRegister = () => {
     console.log('Register:', nama, email, password);

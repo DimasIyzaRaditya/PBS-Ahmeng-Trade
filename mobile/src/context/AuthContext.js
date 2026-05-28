@@ -15,13 +15,19 @@ export const AuthProvider = ({ children }) => {
     setToken(res.token);
   };
 
+  const register = async (nama, email, password) => {
+    const res = await apiRegister(nama, email, password);
+    setUser(res.user);
+    setToken(res.token);
+  };
+
   const logout = () => {
     setUser(null);
     setToken(null);
   };
 
   return (
-    <AuthContext.Provider value={{ user, token, login, logout }}>
+    <AuthContext.Provider value={{ user, token, login, register, logout }}>
       {children}
     </AuthContext.Provider>
   );

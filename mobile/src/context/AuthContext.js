@@ -33,23 +33,17 @@ export const AuthProvider = ({ children }) => {
     const res = await apiLogin(email, password);
     setUser(res.user);
     setToken(res.token);
-    await AsyncStorage.setItem('token', res.token);
-    await AsyncStorage.setItem('user', JSON.stringify(res.user));
   };
 
   const register = async (nama, email, password) => {
     const res = await apiRegister(nama, email, password);
     setUser(res.user);
     setToken(res.token);
-    await AsyncStorage.setItem('token', res.token);
-    await AsyncStorage.setItem('user', JSON.stringify(res.user));
   };
 
-  const logout = async () => {
+  const logout = () => {
     setUser(null);
     setToken(null);
-    await AsyncStorage.removeItem('token');
-    await AsyncStorage.removeItem('user');
   };
 
   return (

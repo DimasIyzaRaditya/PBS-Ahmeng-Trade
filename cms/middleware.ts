@@ -19,4 +19,5 @@ export function middleware(request: NextRequest) {
   if (!token || role !== "admin") {
     const url = request.nextUrl.clone();
     url.pathname = "/login";
+    return NextResponse.redirect(url);
 

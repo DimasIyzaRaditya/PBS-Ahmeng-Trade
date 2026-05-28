@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { View, Text, TextInput, TouchableOpacity, StyleSheet } from 'react-native';
+import { View, Text, TextInput, TouchableOpacity, StyleSheet, Alert } from 'react-native';
 import { useAuth } from '../../context/AuthContext';
 
 export default function LoginScreen({ navigation }) {
@@ -8,7 +8,11 @@ export default function LoginScreen({ navigation }) {
   const { login } = useAuth();
 
   const handleLogin = async () => {
-    await login(email, password);
+    try {
+      await login(email, password);
+    } catch (error) {
+      Alert.alert('Login Gagal', 'Email atau password salah');
+    }
   };
 
   return (

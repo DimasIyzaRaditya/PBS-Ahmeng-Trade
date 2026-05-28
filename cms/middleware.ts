@@ -14,4 +14,6 @@ export function middleware(request: NextRequest) {
   }
 
   const token = request.cookies.get("cms_token")?.value;
+  const role = request.cookies.get("cms_role")?.value;
+
 

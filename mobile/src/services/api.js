@@ -29,8 +29,13 @@ export const apiGetProduk = async (token) => {
   return await res.json();
 };
 
-export const apiGetUser = async () => {
-  return {};
+export const apiGetUser = async (token) => {
+  const res = await fetch(`${BASE_URL}/user`, {
+    method: 'GET',
+    headers: { Authorization: `Bearer ${token}` },
+  });
+  if (!res.ok) throw new Error('Gagal ambil data user');
+  return await res.json();
 };
 
 export const apiGetTransaksi = async () => {

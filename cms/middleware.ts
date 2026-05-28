@@ -8,4 +8,5 @@ export function middleware(request: NextRequest) {
     pathname.startsWith("/login") ||
     pathname.startsWith("/_next") ||
     pathname.startsWith("/assets") ||
+    pathname === "/favicon.ico"
 

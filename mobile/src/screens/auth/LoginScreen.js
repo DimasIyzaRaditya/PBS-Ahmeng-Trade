@@ -7,8 +7,8 @@ export default function LoginScreen({ navigation }) {
   const [password, setPassword] = useState('');
   const { login } = useAuth();
 
-  const handleLogin = () => {
-    console.log('Login:', email, password);
+  const handleLogin = async () => {
+    await login(email, password);
   };
 
   return (

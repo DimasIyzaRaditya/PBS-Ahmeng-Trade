@@ -13,3 +13,5 @@ export function middleware(request: NextRequest) {
     return NextResponse.next();
   }
 
+  const token = request.cookies.get("cms_token")?.value;
+

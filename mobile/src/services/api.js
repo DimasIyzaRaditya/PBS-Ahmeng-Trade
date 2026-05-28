@@ -47,8 +47,17 @@ export const apiGetTransaksi = async (token) => {
   return await res.json();
 };
 
-export const apiTambahTransaksi = async (data) => {
-  return { success: true, data };
+export const apiTambahTransaksi = async (token, data) => {
+  const res = await fetch(`${BASE_URL}/transaksi`, {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+      Authorization: `Bearer ${token}`,
+    },
+    body: JSON.stringify(data),
+  });
+  if (!res.ok) throw new Error('Gagal tambah transaksi');
+  return await res.json();
 };
 
 export const apiHapusProduk = async (id) => {

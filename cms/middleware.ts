@@ -17,4 +17,5 @@ export function middleware(request: NextRequest) {
   const role = request.cookies.get("cms_role")?.value;
 
   if (!token || role !== "admin") {
+    const url = request.nextUrl.clone();
 

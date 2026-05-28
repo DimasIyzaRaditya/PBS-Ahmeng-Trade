@@ -8,8 +8,8 @@ export default function RegisterScreen({ navigation }) {
   const [password, setPassword] = useState('');
   const { register } = useAuth();
 
-  const handleRegister = () => {
-    console.log('Register:', nama, email, password);
+  const handleRegister = async () => {
+    await register(nama, email, password);
   };
 
   return (

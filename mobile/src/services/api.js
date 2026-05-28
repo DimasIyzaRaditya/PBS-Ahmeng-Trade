@@ -38,8 +38,13 @@ export const apiGetUser = async (token) => {
   return await res.json();
 };
 
-export const apiGetTransaksi = async () => {
-  return [];
+export const apiGetTransaksi = async (token) => {
+  const res = await fetch(`${BASE_URL}/transaksi`, {
+    method: 'GET',
+    headers: { Authorization: `Bearer ${token}` },
+  });
+  if (!res.ok) throw new Error('Gagal ambil data transaksi');
+  return await res.json();
 };
 
 export const apiTambahTransaksi = async (data) => {

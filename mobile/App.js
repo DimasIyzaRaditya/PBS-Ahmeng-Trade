@@ -3,6 +3,8 @@ import { NavigationContainer } from '@react-navigation/native';
 import { StatusBar } from 'expo-status-bar';
 import { ActivityIndicator, View } from 'react-native';
 import { AuthProvider, useAuth } from './src/context/AuthContext';
+import AuthNavigator from './src/navigation/AuthNavigator';
+import AppNavigator from './src/navigation/AppNavigator';
 
 function RootNavigator() {
   const { token, loading } = useAuth();
@@ -15,7 +17,7 @@ function RootNavigator() {
     );
   }
 
-  return null;
+  return token ? <AppNavigator /> : <AuthNavigator />;
 }
 
 export default function App() {

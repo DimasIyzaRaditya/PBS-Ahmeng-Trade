@@ -69,6 +69,15 @@ export const apiHapusProduk = async (token, id) => {
   return await res.json();
 };
 
-export const apiUpdateProduk = async (id, data) => {
-  return { success: true, data };
+export const apiUpdateProduk = async (token, id, data) => {
+  const res = await fetch(`${BASE_URL}/produk/${id}`, {
+    method: 'PUT',
+    headers: {
+      'Content-Type': 'application/json',
+      Authorization: `Bearer ${token}`,
+    },
+    body: JSON.stringify(data),
+  });
+  if (!res.ok) throw new Error('Gagal update produk');
+  return await res.json();
 };

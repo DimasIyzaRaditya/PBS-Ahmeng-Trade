@@ -14,7 +14,7 @@ export class TransaksiService {
   constructor(private readonly prisma: PrismaService) { }
 
   // validasi apakah produk benar-benar ada di service produk
-  private async validateProduk(produkId: number): Promise<void> {
+  private async validateProduk(produkId: number): Promise<any> {
     const produkServiceUrl =
       process.env.PRODUK_SERVICE_URL ?? 'http://localhost:3002';
 
@@ -39,6 +39,8 @@ export class TransaksiService {
           `Produk dengan id ${produkId} tidak ditemukan`,
         );
       }
+
+      return body.data;
     } catch (err) {
       // re-throw jika sudah jenis error Nest
       if (err instanceof NotFoundException || err instanceof BadGatewayException) {
@@ -54,14 +56,14 @@ export class TransaksiService {
   // buat fungsi tambah data transaksi
   async create(createTransaksiDto: CreateTransaksiDto) {
     // validasi produkId ke produk service terlebih dahulu
-    await this.validateProduk(createTransaksiDto.produkId);
+    const produk = await this.validateProduk(createTransaksiDto.produkId);
 
     await this.prisma.transaksi.create({
       data: {
         produkId: createTransaksiDto.produkId,
         namaPembeli: createTransaksiDto.namaPembeli,
         emailPembeli: createTransaksiDto.emailPembeli,
-        totalHarga: createTransaksiDto.totalHarga,
+        totalHarga: produk.harga,
       },
     });
 
@@ -86,9 +88,12 @@ export class TransaksiService {
 
   // buat fungsi update data transaksi berdasarkan id
   async update(id: number, updateTransaksiDto: UpdateTransaksiDto) {
+    let hargaBaru: number | undefined = undefined;
+
     // jika produkId diupdate, validasi dulu ke produk service
     if (updateTransaksiDto.produkId !== undefined) {
-      await this.validateProduk(updateTransaksiDto.produkId);
+      const produk = await this.validateProduk(updateTransaksiDto.produkId);
+      hargaBaru = produk.harga;
     }
 
     const data = await this.prisma.transaksi.update({
@@ -97,7 +102,7 @@ export class TransaksiService {
         produkId: updateTransaksiDto.produkId,
         namaPembeli: updateTransaksiDto.namaPembeli,
         emailPembeli: updateTransaksiDto.emailPembeli,
-        totalHarga: updateTransaksiDto.totalHarga,
+        ...(hargaBaru !== undefined && { totalHarga: hargaBaru }),
       },
     });
 

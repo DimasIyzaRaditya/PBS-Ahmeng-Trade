@@ -1,12 +1,26 @@
 import React, { useState } from 'react';
-import { View, Text, TextInput, TouchableOpacity, StyleSheet } from 'react-native';
+import { View, Text, TextInput, TouchableOpacity, StyleSheet, Alert, ActivityIndicator } from 'react-native';
+import { useAuth } from '../../context/AuthContext';
 
 export default function LoginScreen({ navigation }) {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const [loading, setLoading] = useState(false);
+  const { login } = useAuth();
 
-  const handleLogin = () => {
-    console.log('Login:', email, password);
+  const handleLogin = async () => {
+    if (!email || !password) {
+      Alert.alert('Peringatan', 'Email dan password tidak boleh kosong');
+      return;
+    }
+    try {
+      setLoading(true);
+      await login(email, password);
+    } catch (error) {
+      Alert.alert('Login Gagal', 'Email atau password salah');
+    } finally {
+      setLoading(false);
+    }
   };
 
   return (
@@ -30,9 +44,8 @@ export default function LoginScreen({ navigation }) {
         secureTextEntry={true}
       />
       <TouchableOpacity style={styles.button} onPress={handleLogin}>
-        <Text style={styles.buttonText}>Masuk</Text>
+        {loading ? <ActivityIndicator color="#fff" /> : <Text style={styles.buttonText}>Masuk</Text>}
       </TouchableOpacity>
-
       <TouchableOpacity onPress={() => navigation.navigate('Register')}>
         <Text style={styles.linkText}>Belum punya akun? Daftar di sini</Text>
       </TouchableOpacity>
@@ -41,50 +54,11 @@ export default function LoginScreen({ navigation }) {
 }
 
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    justifyContent: 'center',
-    padding: 24,
-    backgroundColor: '#fff',
-  },
-  judul: {
-    fontSize: 28,
-    fontWeight: 'bold',
-    textAlign: 'center',
-    marginBottom: 32,
-    color: '#4F46E5',
-  },
-  label: {
-    fontSize: 14,
-    color: '#374151',
-    marginBottom: 6,
-    fontWeight: '600',
-  },
-  input: {
-    borderWidth: 1,
-    borderColor: '#D1D5DB',
-    borderRadius: 10,
-    padding: 12,
-    marginBottom: 16,
-    fontSize: 15,
-    backgroundColor: '#F9FAFB',
-  },
-  button: {
-    backgroundColor: '#4F46E5',
-    padding: 14,
-    borderRadius: 10,
-    alignItems: 'center',
-    marginTop: 8,
-  },
-  buttonText: {
-    color: '#fff',
-    fontSize: 16,
-    fontWeight: '600',
-  },
-  linkText: {
-    textAlign: 'center',
-    marginTop: 16,
-    color: '#4F46E5',
-    fontSize: 14,
-  },
+  container: { flex: 1, justifyContent: 'center', padding: 24, backgroundColor: '#fff' },
+  judul: { fontSize: 28, fontWeight: 'bold', textAlign: 'center', marginBottom: 32, color: '#4F46E5' },
+  label: { fontSize: 14, color: '#374151', marginBottom: 6, fontWeight: '600' },
+  input: { borderWidth: 1, borderColor: '#D1D5DB', borderRadius: 10, padding: 12, marginBottom: 16, fontSize: 15, backgroundColor: '#F9FAFB' },
+  button: { backgroundColor: '#4F46E5', padding: 14, borderRadius: 10, alignItems: 'center', marginTop: 8 },
+  buttonText: { color: '#fff', fontSize: 16, fontWeight: '600' },
+  linkText: { textAlign: 'center', marginTop: 16, color: '#4F46E5', fontSize: 14 },
 });

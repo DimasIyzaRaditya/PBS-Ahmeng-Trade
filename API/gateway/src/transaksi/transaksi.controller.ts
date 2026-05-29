@@ -7,6 +7,7 @@ import {
   Param,
   Delete,
   UseGuards,
+  ParseIntPipe,
 } from '@nestjs/common';
 import { TransaksiService } from './transaksi.service';
 import { CreateTransaksiDto } from './dto/create-transaksi.dto';
@@ -29,20 +30,20 @@ export class TransaksiController {
   }
 
   @Get(':id')
-  findOne(@Param('id') id: string) {
-    return this.transaksiService.findOne(+id);
+  findOne(@Param('id', ParseIntPipe) id: number) {
+    return this.transaksiService.findOne(id);
   }
 
   @Patch(':id')
   update(
-    @Param('id') id: string,
+    @Param('id', ParseIntPipe) id: number,
     @Body() updateTransaksiDto: UpdateTransaksiDto,
   ) {
-    return this.transaksiService.update(+id, updateTransaksiDto);
+    return this.transaksiService.update(id, updateTransaksiDto);
   }
 
   @Delete(':id')
-  remove(@Param('id') id: string) {
-    return this.transaksiService.remove(+id);
+  remove(@Param('id', ParseIntPipe) id: number) {
+    return this.transaksiService.remove(id);
   }
 }

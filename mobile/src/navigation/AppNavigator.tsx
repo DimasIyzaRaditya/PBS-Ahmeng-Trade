@@ -4,7 +4,13 @@ import HomeScreen from '../screens/HomeScreen';
 import ProdukScreen from '../screens/ProdukScreen';
 import ProfileScreen from '../screens/ProfileScreen';
 
-const Tab = createBottomTabNavigator();
+type AppTabParamList = {
+  Home: undefined;
+  Produk: undefined;
+  Profil: undefined;
+};
+
+const Tab = createBottomTabNavigator<AppTabParamList>();
 
 export default function AppNavigator() {
   return (

@@ -14,7 +14,7 @@ export const apiRegister = async (nama: string, email: string, password: string)
   const res = await fetch(`${BASE_URL}/user`, {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify({ nama, email, password }),
+    body: JSON.stringify({ name: nama, username: email, password }),
   });
   if (!res.ok) throw new Error('Registrasi gagal');
   return await res.json();

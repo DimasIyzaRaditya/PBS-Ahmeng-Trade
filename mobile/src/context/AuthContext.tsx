@@ -57,11 +57,8 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
   };
 
   const register = async (nama: string, email: string, password: string): Promise<void> => {
-    const res = await apiRegister(nama, email, password);
-    setUser(res.user);
-    setToken(res.token);
-    await AsyncStorage.setItem('token', res.token);
-    await AsyncStorage.setItem('user', JSON.stringify(res.user));
+    await apiRegister(nama, email, password);
+    await login(email, password);
   };
 
   const logout = async (): Promise<void> => {

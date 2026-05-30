@@ -1,15 +1,27 @@
 import React, { useState } from 'react';
 import { View, Text, TextInput, TouchableOpacity, StyleSheet, Alert, ActivityIndicator } from 'react-native';
 import { useAuth } from '../../context/AuthContext';
+import { StackNavigationProp } from '@react-navigation/stack';
 
-export default function RegisterScreen({ navigation }) {
-  const [nama, setNama] = useState('');
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
-  const [loading, setLoading] = useState(false);
+type AuthStackParamList = {
+  Login: undefined;
+  Register: undefined;
+};
+
+type RegisterScreenNavigationProp = StackNavigationProp<AuthStackParamList, 'Register'>;
+
+interface Props {
+  navigation: RegisterScreenNavigationProp;
+}
+
+export default function RegisterScreen({ navigation }: Props) {
+  const [nama, setNama] = useState<string>('');
+  const [email, setEmail] = useState<string>('');
+  const [password, setPassword] = useState<string>('');
+  const [loading, setLoading] = useState<boolean>(false);
   const { register } = useAuth();
 
-  const handleRegister = async () => {
+  const handleRegister = async (): Promise<void> => {
     if (!nama || !email || !password) {
       Alert.alert('Peringatan', 'Semua field harus diisi');
       return;

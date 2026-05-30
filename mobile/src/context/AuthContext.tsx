@@ -50,10 +50,10 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
 
   const login = async (email: string, password: string): Promise<void> => {
     const res = await apiLogin(email, password);
-    setUser(res.user);
-    setToken(res.token);
-    await AsyncStorage.setItem('token', res.token);
-    await AsyncStorage.setItem('user', JSON.stringify(res.user));
+    setUser(res.data);
+    setToken(res.data.access_token);
+    await AsyncStorage.setItem('token', res.data.access_token);
+    await AsyncStorage.setItem('user', JSON.stringify(res.data));
   };
 
   const register = async (nama: string, email: string, password: string): Promise<void> => {

@@ -1,6 +1,6 @@
 const BASE_URL = 'http://192.168.1.7:3000';
 
-export const apiLogin = async (email, password) => {
+export const apiLogin = async (email: string, password: string): Promise<any> => {
   const res = await fetch(`${BASE_URL}/auth/login`, {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
@@ -10,7 +10,7 @@ export const apiLogin = async (email, password) => {
   return await res.json();
 };
 
-export const apiRegister = async (nama, email, password) => {
+export const apiRegister = async (nama: string, email: string, password: string): Promise<any> => {
   const res = await fetch(`${BASE_URL}/user`, {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
@@ -20,7 +20,7 @@ export const apiRegister = async (nama, email, password) => {
   return await res.json();
 };
 
-export const apiGetProduk = async (token) => {
+export const apiGetProduk = async (token: string): Promise<any> => {
   const res = await fetch(`${BASE_URL}/produk`, {
     method: 'GET',
     headers: { Authorization: `Bearer ${token}` },
@@ -29,7 +29,7 @@ export const apiGetProduk = async (token) => {
   return await res.json();
 };
 
-export const apiGetUser = async (token) => {
+export const apiGetUser = async (token: string): Promise<any> => {
   const res = await fetch(`${BASE_URL}/user`, {
     method: 'GET',
     headers: { Authorization: `Bearer ${token}` },
@@ -38,7 +38,7 @@ export const apiGetUser = async (token) => {
   return await res.json();
 };
 
-export const apiGetTransaksi = async (token) => {
+export const apiGetTransaksi = async (token: string): Promise<any> => {
   const res = await fetch(`${BASE_URL}/transaksi`, {
     method: 'GET',
     headers: { Authorization: `Bearer ${token}` },
@@ -47,7 +47,7 @@ export const apiGetTransaksi = async (token) => {
   return await res.json();
 };
 
-export const apiTambahTransaksi = async (token, data) => {
+export const apiTambahTransaksi = async (token: string, data: object): Promise<any> => {
   const res = await fetch(`${BASE_URL}/transaksi`, {
     method: 'POST',
     headers: {
@@ -60,7 +60,7 @@ export const apiTambahTransaksi = async (token, data) => {
   return await res.json();
 };
 
-export const apiHapusProduk = async (token, id) => {
+export const apiHapusProduk = async (token: string, id: number): Promise<any> => {
   const res = await fetch(`${BASE_URL}/produk/${id}`, {
     method: 'DELETE',
     headers: { Authorization: `Bearer ${token}` },
@@ -69,7 +69,7 @@ export const apiHapusProduk = async (token, id) => {
   return await res.json();
 };
 
-export const apiUpdateProduk = async (token, id, data) => {
+export const apiUpdateProduk = async (token: string, id: number, data: object): Promise<any> => {
   const res = await fetch(`${BASE_URL}/produk/${id}`, {
     method: 'PUT',
     headers: {

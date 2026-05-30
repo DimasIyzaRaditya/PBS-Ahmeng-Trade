@@ -1,15 +1,34 @@
-import React, { createContext, useState, useContext, useEffect } from 'react';
+import React, { createContext, useState, useContext, useEffect, ReactNode } from 'react';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { apiLogin, apiRegister } from '../services/api';
 
-const AuthContext = createContext();
+interface User {
+  id: number;
+  name: string;
+  username: string;
+}
 
-export const useAuth = () => useContext(AuthContext);
+interface AuthContextType {
+  user: User | null;
+  token: string | null;
+  loading: boolean;
+  login: (email: string, password: string) => Promise<void>;
+  register: (nama: string, email: string, password: string) => Promise<void>;
+  logout: () => Promise<void>;
+}
 
-export const AuthProvider = ({ children }) => {
-  const [user, setUser] = useState(null);
-  const [token, setToken] = useState(null);
-  const [loading, setLoading] = useState(true);
+const AuthContext = createContext<AuthContextType | undefined>(undefined);
+
+export const useAuth = (): AuthContextType => {
+  const context = useContext(AuthContext);
+  if (!context) throw new Error('useAuth harus dipakai dalam AuthProvider');
+  return context;
+};
+
+export const AuthProvider = ({ children }: { children: ReactNode }) => {
+  const [user, setUser] = useState<User | null>(null);
+  const [token, setToken] = useState<string | null>(null);
+  const [loading, setLoading] = useState<boolean>(true);
 
   useEffect(() => {
     const loadSession = async () => {
@@ -29,7 +48,7 @@ export const AuthProvider = ({ children }) => {
     loadSession();
   }, []);
 
-  const login = async (email, password) => {
+  const login = async (email: string, password: string): Promise<void> => {
     const res = await apiLogin(email, password);
     setUser(res.user);
     setToken(res.token);
@@ -37,7 +56,7 @@ export const AuthProvider = ({ children }) => {
     await AsyncStorage.setItem('user', JSON.stringify(res.user));
   };
 
-  const register = async (nama, email, password) => {
+  const register = async (nama: string, email: string, password: string): Promise<void> => {
     const res = await apiRegister(nama, email, password);
     setUser(res.user);
     setToken(res.token);
@@ -45,7 +64,7 @@ export const AuthProvider = ({ children }) => {
     await AsyncStorage.setItem('user', JSON.stringify(res.user));
   };
 
-  const logout = async () => {
+  const logout = async (): Promise<void> => {
     setUser(null);
     setToken(null);
     await AsyncStorage.removeItem('token');

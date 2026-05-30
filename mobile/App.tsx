@@ -6,7 +6,7 @@ import { AuthProvider, useAuth } from './src/context/AuthContext';
 import AuthNavigator from './src/navigation/AuthNavigator';
 import AppNavigator from './src/navigation/AppNavigator';
 
-function RootNavigator() {
+function RootNavigator(): React.JSX.Element {
   const { token, loading } = useAuth();
 
   if (loading) {
@@ -20,7 +20,7 @@ function RootNavigator() {
   return token ? <AppNavigator /> : <AuthNavigator />;
 }
 
-export default function App() {
+export default function App(): React.JSX.Element {
   return (
     <AuthProvider>
       <NavigationContainer>

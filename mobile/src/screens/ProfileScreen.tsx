@@ -1,7 +1,7 @@
 import React from 'react';
 import { View, Text, StyleSheet } from 'react-native';
 
-export default function ProfileScreen() {
+export default function ProfileScreen(): React.JSX.Element {
   return (
     <View style={styles.container}>
       <Text style={styles.judul}>Profil</Text>

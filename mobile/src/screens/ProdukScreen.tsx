@@ -1,10 +1,10 @@
 import React, { useState, useEffect } from 'react';
-import { View, Text, ScrollView, Image, ActivityIndicator } from 'react-native';
+import { View, Text, ScrollView, Image, ActivityIndicator, TextInput, Pressable } from 'react-native';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 import { useAuth } from '../context/AuthContext';
 import { apiGetProduk } from '../services/api';
 import {
-  colors, commonStyles, headerStyles, tableStyles,
+  colors, commonStyles, headerStyles, tableStyles, inputStyles,
   sectionStyles, spacing, typography, borderRadius, formatRupiah,
 } from '../styles';
 
@@ -19,6 +19,7 @@ export default function ProdukScreen(): React.JSX.Element {
   const [produk, setProduk] = useState<Produk[]>([]);
   const [loading, setLoading] = useState<boolean>(true);
   const [error, setError] = useState<string>('');
+  const [searchQuery, setSearchQuery] = useState<string>('');
 
   useEffect(() => {
     const fetchProduk = async () => {
@@ -33,6 +34,10 @@ export default function ProdukScreen(): React.JSX.Element {
     };
     fetchProduk();
   }, []);
+
+  const filteredProduk = searchQuery.trim()
+    ? produk.filter(p => p.nama.toLowerCase().includes(searchQuery.toLowerCase()))
+    : produk;
 
   return (
     <ScrollView style={commonStyles.container}>
@@ -50,6 +55,25 @@ export default function ProdukScreen(): React.JSX.Element {
           <Text style={{ color: colors.text.secondary, fontSize: typography.fontSize.sm }}>
             Halo, {user?.name ?? 'User'}!
           </Text>
+        </View>
+      </View>
+
+      {/* Search */}
+      <View style={[commonStyles.containerPadding, { marginTop: spacing.lg }]}>
+        <View style={inputStyles.searchContainer}>
+          <MaterialCommunityIcons name="magnify" size={20} color={colors.text.secondary} />
+          <TextInput
+            placeholder="Cari produk..."
+            placeholderTextColor={colors.text.tertiary}
+            value={searchQuery}
+            onChangeText={setSearchQuery}
+            style={inputStyles.searchInput}
+          />
+          {searchQuery.length > 0 && (
+            <Pressable onPress={() => setSearchQuery('')}>
+              <MaterialCommunityIcons name="close-circle" size={20} color={colors.text.secondary} />
+            </Pressable>
+          )}
         </View>
       </View>
 
@@ -75,18 +99,18 @@ export default function ProdukScreen(): React.JSX.Element {
             <MaterialCommunityIcons name="alert-circle-outline" size={32} color={colors.status.error} style={{ marginBottom: spacing.base }} />
             <Text style={{ color: colors.status.error, fontSize: typography.fontSize.base }}>{error}</Text>
           </View>
-        ) : produk.length > 0 ? (
-          produk.map((item, index) => (
+        ) : filteredProduk.length > 0 ? (
+          filteredProduk.map((item, index) => (
             <View
               key={item.id}
               style={[
                 tableStyles.row,
                 index % 2 === 0 ? tableStyles.rowEven : tableStyles.rowOdd,
                 {
-                  borderBottomWidth: index === produk.length - 1 ? 0 : 1,
+                  borderBottomWidth: index === filteredProduk.length - 1 ? 0 : 1,
                   borderBottomColor: colors.border.primary,
-                  borderBottomLeftRadius: index === produk.length - 1 ? borderRadius.md : 0,
-                  borderBottomRightRadius: index === produk.length - 1 ? borderRadius.md : 0,
+                  borderBottomLeftRadius: index === filteredProduk.length - 1 ? borderRadius.md : 0,
+                  borderBottomRightRadius: index === filteredProduk.length - 1 ? borderRadius.md : 0,
                 },
               ]}
             >

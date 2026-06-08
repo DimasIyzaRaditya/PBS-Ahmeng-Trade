@@ -32,9 +32,36 @@ export default function AppNavigator() {
         },
       }}
     >
-      <Tab.Screen name="Home" component={HomeScreen} />
-      <Tab.Screen name="Produk" component={ProdukScreen} />
-      <Tab.Screen name="Profil" component={ProfileScreen} />
+      <Tab.Screen
+        name="Home"
+        component={HomeScreen}
+        options={{
+          tabBarLabel: 'Beranda',
+          tabBarIcon: ({ color, size }) => (
+            <MaterialCommunityIcons name="home-outline" size={size} color={color} />
+          ),
+        }}
+      />
+      <Tab.Screen
+        name="Produk"
+        component={ProdukScreen}
+        options={{
+          tabBarLabel: 'Produk',
+          tabBarIcon: ({ color, size }) => (
+            <MaterialCommunityIcons name="package-variant-closed" size={size} color={color} />
+          ),
+        }}
+      />
+      <Tab.Screen
+        name="Profil"
+        component={ProfileScreen}
+        options={{
+          tabBarLabel: 'Profil',
+          tabBarIcon: ({ color, size }) => (
+            <MaterialCommunityIcons name="account-outline" size={size} color={color} />
+          ),
+        }}
+      />
     </Tab.Navigator>
   );
 }

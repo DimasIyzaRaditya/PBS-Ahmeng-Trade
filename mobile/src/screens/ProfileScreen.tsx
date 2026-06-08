@@ -3,7 +3,8 @@ import { View, Text, ScrollView, Image } from 'react-native';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 import { useAuth } from '../context/AuthContext';
 import {
-  colors, commonStyles, headerStyles, spacing, typography,
+  colors, commonStyles, headerStyles, cardStyles,
+  spacing, typography,
 } from '../styles';
 
 export default function ProfileScreen(): React.JSX.Element {
@@ -50,6 +51,37 @@ export default function ProfileScreen(): React.JSX.Element {
         <Text style={{ fontSize: typography.fontSize.base, color: colors.text.secondary, marginTop: spacing.xs }}>
           @{user?.username ?? '-'}
         </Text>
+      </View>
+
+      {/* Info Akun */}
+      <View style={{ paddingHorizontal: spacing.lg, paddingTop: spacing['2xl'] }}>
+        <Text style={{ fontSize: typography.fontSize.lg, fontWeight: typography.fontWeight.bold, color: colors.text.primary, marginBottom: spacing.lg }}>
+          Informasi Akun
+        </Text>
+
+        <View style={[cardStyles.container, { marginBottom: spacing.base }]}>
+          <View style={commonStyles.flexRowBetween}>
+            <View style={{ flexDirection: 'row', alignItems: 'center' }}>
+              <MaterialCommunityIcons name="account-outline" size={18} color={colors.text.secondary} style={{ marginRight: spacing.base }} />
+              <Text style={{ fontSize: typography.fontSize.sm, color: colors.text.secondary }}>Nama Lengkap</Text>
+            </View>
+            <Text style={{ fontSize: typography.fontSize.base, fontWeight: typography.fontWeight.semibold, color: colors.text.primary }}>
+              {user?.name ?? '-'}
+            </Text>
+          </View>
+        </View>
+
+        <View style={[cardStyles.container, { marginBottom: spacing['3xl'] }]}>
+          <View style={commonStyles.flexRowBetween}>
+            <View style={{ flexDirection: 'row', alignItems: 'center' }}>
+              <MaterialCommunityIcons name="at" size={18} color={colors.text.secondary} style={{ marginRight: spacing.base }} />
+              <Text style={{ fontSize: typography.fontSize.sm, color: colors.text.secondary }}>Username</Text>
+            </View>
+            <Text style={{ fontSize: typography.fontSize.base, fontWeight: typography.fontWeight.semibold, color: colors.text.primary }}>
+              {user?.username ?? '-'}
+            </Text>
+          </View>
+        </View>
       </View>
     </ScrollView>
   );

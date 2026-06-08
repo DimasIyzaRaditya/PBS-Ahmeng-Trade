@@ -1,8 +1,10 @@
 import React from 'react';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
+import { MaterialCommunityIcons } from '@expo/vector-icons';
 import HomeScreen from '../screens/HomeScreen';
 import ProdukScreen from '../screens/ProdukScreen';
 import ProfileScreen from '../screens/ProfileScreen';
+import { colors, typography } from '../styles';
 
 type AppTabParamList = {
   Home: undefined;
@@ -14,7 +16,22 @@ const Tab = createBottomTabNavigator<AppTabParamList>();
 
 export default function AppNavigator() {
   return (
-    <Tab.Navigator>
+    <Tab.Navigator
+      screenOptions={{
+        headerShown: false,
+        tabBarStyle: {
+          backgroundColor: colors.background.secondary,
+          borderTopColor: colors.border.primary,
+          borderTopWidth: 1,
+        },
+        tabBarActiveTintColor: colors.text.primary,
+        tabBarInactiveTintColor: colors.text.tertiary,
+        tabBarLabelStyle: {
+          fontSize: typography.fontSize.xs,
+          fontWeight: typography.fontWeight.medium,
+        },
+      }}
+    >
       <Tab.Screen name="Home" component={HomeScreen} />
       <Tab.Screen name="Produk" component={ProdukScreen} />
       <Tab.Screen name="Profil" component={ProfileScreen} />

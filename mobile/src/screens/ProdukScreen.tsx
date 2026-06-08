@@ -1,12 +1,38 @@
-import React from 'react';
-import { View, Text, ScrollView, Image } from 'react-native';
+import React, { useState, useEffect } from 'react';
+import { View, Text, ScrollView, Image, ActivityIndicator } from 'react-native';
+import { MaterialCommunityIcons } from '@expo/vector-icons';
 import { useAuth } from '../context/AuthContext';
+import { apiGetProduk } from '../services/api';
 import {
-  colors, commonStyles, headerStyles, spacing, typography,
+  colors, commonStyles, headerStyles, tableStyles,
+  sectionStyles, spacing, typography,
 } from '../styles';
 
+interface Produk {
+  id: number;
+  nama: string;
+  harga: number;
+}
+
 export default function ProdukScreen(): React.JSX.Element {
-  const { user } = useAuth();
+  const { token, user } = useAuth();
+  const [produk, setProduk] = useState<Produk[]>([]);
+  const [loading, setLoading] = useState<boolean>(true);
+  const [error, setError] = useState<string>('');
+
+  useEffect(() => {
+    const fetchProduk = async () => {
+      try {
+        const res = await apiGetProduk(token ?? '');
+        setProduk(Array.isArray(res.data) ? res.data : []);
+      } catch (e) {
+        setError('Gagal memuat produk');
+      } finally {
+        setLoading(false);
+      }
+    };
+    fetchProduk();
+  }, []);
 
   return (
     <ScrollView style={commonStyles.container}>
@@ -25,6 +51,12 @@ export default function ProdukScreen(): React.JSX.Element {
             Halo, {user?.name ?? 'User'}!
           </Text>
         </View>
+      </View>
+
+      {/* Section */}
+      <View style={sectionStyles.container}>
+        <Text style={sectionStyles.title}>Daftar Produk</Text>
+        <Text style={sectionStyles.subtitle}>Semua produk yang tersedia</Text>
       </View>
     </ScrollView>
   );

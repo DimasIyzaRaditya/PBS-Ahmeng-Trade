@@ -1,14 +1,14 @@
 import React from 'react';
-import { View, Text, ScrollView, Image } from 'react-native';
+import { View, Text, ScrollView, Image, TouchableOpacity } from 'react-native';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 import { useAuth } from '../context/AuthContext';
 import {
   colors, commonStyles, headerStyles, cardStyles,
-  spacing, typography,
+  buttonStyles, spacing, typography, borderRadius,
 } from '../styles';
 
 export default function ProfileScreen(): React.JSX.Element {
-  const { user } = useAuth();
+  const { user, logout } = useAuth();
 
   return (
     <ScrollView style={commonStyles.container}>
@@ -82,6 +82,15 @@ export default function ProfileScreen(): React.JSX.Element {
             </Text>
           </View>
         </View>
+
+        {/* Tombol Logout */}
+        <TouchableOpacity
+          style={[buttonStyles.danger, { borderRadius: borderRadius.base }]}
+          onPress={logout}
+        >
+          <MaterialCommunityIcons name="logout" size={18} color={colors.text.primary} style={{ marginRight: spacing.base }} />
+          <Text style={buttonStyles.dangerText}>Logout</Text>
+        </TouchableOpacity>
       </View>
     </ScrollView>
   );

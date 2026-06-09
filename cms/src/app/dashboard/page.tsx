@@ -255,6 +255,7 @@ export default function AdminPanel() {
 
   const tabs = useMemo(
     () => [
+      { key: "dashboard" as const, label: "Dashboard" },
       { key: "users" as const, label: "User" },
       { key: "produk" as const, label: "Produk" },
       { key: "transaksi" as const, label: "Transaksi" },

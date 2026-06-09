@@ -268,3 +268,8 @@
   flex-direction: column;
   gap: 0.5rem;
 }
+
+.transactionToolbar {
+  display: grid;
+  gap: 0.5rem;
+}

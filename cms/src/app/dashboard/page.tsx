@@ -4,7 +4,7 @@ import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
 
-type TabKey = "users" | "produk" | "transaksi";
+type TabKey = "dashboard" | "users" | "produk" | "transaksi";
 
 interface User {
   id: number;

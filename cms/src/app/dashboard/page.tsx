@@ -229,6 +229,7 @@ export default function AdminPanel() {
   const [produk, setProduk] = useState<Produk[]>([]);
   const [transaksi, setTransaksi] = useState<Transaksi[]>([]);
 
+  const [userTable, setUserTable] = useState<PaginationState>({ query: "", page: 1, pageSize: 5 });
   const [userForm, setUserForm] = useState({ id: 0, name: "", username: "", password: "" });
   const [produkForm, setProdukForm] = useState({ id: 0, nama: "", harga: "" });
   const [transaksiForm, setTransaksiForm] = useState({

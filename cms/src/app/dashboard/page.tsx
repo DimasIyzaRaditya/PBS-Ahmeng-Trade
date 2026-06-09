@@ -46,6 +46,7 @@ const API_BASE ="http://localhost:3000";
 const API_USER = `${API_BASE}/user`;
 const API_PRODUK = `${API_BASE}/produk`;
 const API_TRANSAKSI = `${API_BASE}/transaksi`;
+const PAGE_SIZE_OPTIONS = [5, 10, 20];
 
 const buildAuthHeaders = (token: string, includeJson = false) => ({
   ...(includeJson ? { "Content-Type": "application/json" } : {}),

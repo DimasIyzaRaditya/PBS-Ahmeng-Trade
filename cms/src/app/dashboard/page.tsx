@@ -793,6 +793,29 @@ export default function AdminPanel() {
         : `${API_TRANSAKSI}/${id}`;
 
     setSaving(true);
+    try {
+      const res = await fetch(url, {
+        method: "DELETE",
+        headers: buildAuthHeaders(authToken),
+      });
+      if (res.status === 401) {
+        handleLogout();
+        return;
+      }
+      if (!res.ok) {
+        const errJson = await res.json();
+        throw new Error(errJson.message || "Gagal menghapus data");
+      }
+      addToast("Data berhasil dihapus", "success");
+      await loadAll(authToken, false);
+    } catch (err) {
+      const message = err instanceof Error ? err.message : "Terjadi kesalahan";
+      setError(message);
+      addToast(message, "error");
+    } finally {
+      setSaving(false);
+    }
+  };
 
     const payload = {
       nama: produkForm.nama.trim(),

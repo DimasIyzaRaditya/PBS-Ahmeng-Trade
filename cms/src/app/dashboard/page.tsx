@@ -728,6 +728,12 @@ export default function AdminPanel() {
       errors.totalHarga = "Masukkan angka valid";
     }
 
+    setTransaksiErrors(errors);
+    if (Object.keys(errors).length > 0) {
+      addToast("Periksa kembali form transaksi", "error");
+      return;
+    }
+
     const hargaValue = Number(produkForm.harga);
     if (!produkForm.nama.trim() || Number.isNaN(hargaValue)) {
       setError("Nama dan harga wajib diisi");

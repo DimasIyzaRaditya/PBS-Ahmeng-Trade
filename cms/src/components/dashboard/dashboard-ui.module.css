@@ -91,3 +91,7 @@
 .paginationButton:hover:not(:disabled) {
   border-color: #737373;
 }
+
+.primaryButton {
+
+}

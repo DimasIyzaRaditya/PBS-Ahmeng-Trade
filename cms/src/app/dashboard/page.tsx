@@ -66,6 +66,8 @@ const formatCurrency = (value: number) =>
   return Number.isNaN(parsed.getTime()) ? null : parsed;
 };
 
+const isValidEmail = (value: string) => /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(value);
+
 export default function AdminPanel() {
   const router = useRouter();
   const [activeTab, setActiveTab] = useState<TabKey>("users");

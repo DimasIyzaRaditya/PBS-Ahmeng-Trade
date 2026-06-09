@@ -609,6 +609,11 @@ export default function AdminPanel() {
         body: JSON.stringify(payload),
       });
 
+      if (res.status === 401) {
+        handleLogout();
+        return;
+      }
+
     try {
       const res = await fetch(
         userForm.id ? `${API_USER}/${userForm.id}` : API_USER,

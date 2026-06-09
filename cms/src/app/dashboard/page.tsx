@@ -88,6 +88,20 @@ function EmptyState({ title, description }: { title: string; description: string
   );
 }
 
+function TableSkeleton({ columns = 4 }: { columns?: number }) {
+  return (
+    <div className="overflow-hidden rounded-md border border-neutral-800">
+      {Array.from({ length: 6 }).map((_, row) => (
+        <div key={row} className="grid animate-pulse gap-3 border-b border-neutral-900 p-3" style={{ gridTemplateColumns: `repeat(${columns}, minmax(110px, 1fr))` }}>
+          {Array.from({ length: columns }).map((__, column) => (
+            <div key={column} className="h-4 rounded bg-neutral-800/80" />
+          ))}
+        </div>
+      ))}
+    </div>
+  );
+}
+
 export default function AdminPanel() {
   const router = useRouter();
   const [activeTab, setActiveTab] = useState<TabKey>("users");

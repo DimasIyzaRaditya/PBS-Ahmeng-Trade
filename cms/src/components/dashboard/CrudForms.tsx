@@ -125,3 +125,73 @@ export function ProdukForm({
     </form>
   );
 }
+
+export function TransaksiForm({
+  form,
+  produk,
+  errors,
+  saving,
+  onChange,
+  onSubmit,
+  onCancel,
+}: {
+  form: { id: number; produkId: string; namaPembeli: string; emailPembeli: string; totalHarga: string };
+  produk: ProdukOption[];
+  errors: ValidationErrors<"produkId" | "namaPembeli" | "emailPembeli" | "totalHarga">;
+  saving: boolean;
+  onChange: React.Dispatch<
+    React.SetStateAction<{ id: number; produkId: string; namaPembeli: string; emailPembeli: string; totalHarga: string }>
+  >;
+  onSubmit: (event: React.FormEvent) => void;
+  onCancel: () => void;
+}) {
+  return (
+    <form onSubmit={onSubmit} className={styles.panel}>
+      <h3 className={styles.chartTitle}>{form.id ? "Edit Transaksi" : "Tambah Transaksi"}</h3>
+      <div className={styles.formGrid}>
+        <FormField label="Produk" error={errors.produkId}>
+          <select
+            value={form.produkId}
+            onChange={(event) => onChange((prev) => ({ ...prev, produkId: event.target.value }))}
+            className={cx(styles.select, styles.fieldControl, errors.produkId && styles.inputError)}
+          >
+            <option value="">Pilih produk</option>
+            {produk.map((item) => (
+              <option key={item.id} value={item.id}>
+                {item.nama}
+              </option>
+            ))}
+          </select>
+        </FormField>
+        <FormField label="Nama Pembeli" error={errors.namaPembeli}>
+          <input
+            value={form.namaPembeli}
+            onChange={(event) => onChange((prev) => ({ ...prev, namaPembeli: event.target.value }))}
+            className={cx(styles.input, styles.fieldControl, errors.namaPembeli && styles.inputError)}
+            placeholder="Nama pembeli"
+          />
+        </FormField>
+        <FormField label="Email Pembeli" error={errors.emailPembeli}>
+          <input
+            type="email"
+            value={form.emailPembeli}
+            onChange={(event) => onChange((prev) => ({ ...prev, emailPembeli: event.target.value }))}
+            className={cx(styles.input, styles.fieldControl, errors.emailPembeli && styles.inputError)}
+            placeholder="email@contoh.com"
+          />
+        </FormField>
+        <FormField label="Total Harga" error={errors.totalHarga}>
+          <input
+            type="number"
+            min={0}
+            value={form.totalHarga}
+            onChange={(event) => onChange((prev) => ({ ...prev, totalHarga: event.target.value }))}
+            className={cx(styles.input, styles.fieldControl, errors.totalHarga && styles.inputError)}
+            placeholder="0"
+          />
+        </FormField>
+      </div>
+      <FormActions saving={saving} editing={form.id !== 0} addLabel="Tambah Transaksi" onCancel={onCancel} />
+    </form>
+  );
+}

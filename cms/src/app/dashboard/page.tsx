@@ -486,6 +486,16 @@ export default function AdminPanel() {
   const filteredUsers = useMemo(() => {
     const query = userTable.query.toLowerCase().trim();
     return users.filter((user) => {
+      const matchesSearch =
+        user.name.toLowerCase().includes(query) ||
+        user.username.toLowerCase().includes(query);
+      const matchesFilter =
+        userFilter === "all" ||
+        (userFilter === "admin" && user.username.toLowerCase() === "admin") ||
+        (userFilter === "non-admin" && user.username.toLowerCase() !== "admin");
+      return matchesSearch && matchesFilter;
+    });
+  }, [userFilter, userTable.query, users]);
 
   const handleUserSubmit = async (event: React.FormEvent) => {
     event.preventDefault();

@@ -483,6 +483,10 @@ export default function AdminPanel() {
     };
   }, [productName, transaksi]);
 
+  const filteredUsers = useMemo(() => {
+    const query = userTable.query.toLowerCase().trim();
+    return users.filter((user) => {
+
   const handleUserSubmit = async (event: React.FormEvent) => {
     event.preventDefault();
     setError(null);

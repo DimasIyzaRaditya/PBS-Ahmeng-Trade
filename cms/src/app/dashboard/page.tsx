@@ -5,7 +5,7 @@ import Image from "next/image";
 import { useRouter } from "next/navigation";
 
 type TabKey = "dashboard" | "users" | "produk" | "transaksi";
-
+type ToastType = "success" | "error" | "info";
 interface User {
   id: number;
   name: string;

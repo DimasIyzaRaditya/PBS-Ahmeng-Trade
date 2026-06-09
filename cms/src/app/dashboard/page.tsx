@@ -648,6 +648,16 @@ export default function AdminPanel() {
       return;
     }
 
+    const hargaValue = Number(produkForm.harga);
+    if (!produkForm.nama.trim()) errors.nama = "Wajib diisi";
+    if (!produkForm.harga || Number.isNaN(hargaValue) || hargaValue < 0) errors.harga = "Masukkan angka valid";
+
+    setProdukErrors(errors);
+    if (Object.keys(errors).length > 0) {
+      addToast("Periksa kembali form produk", "error");
+      return;
+    }
+
     try {
       const res = await fetch(
         userForm.id ? `${API_USER}/${userForm.id}` : API_USER,

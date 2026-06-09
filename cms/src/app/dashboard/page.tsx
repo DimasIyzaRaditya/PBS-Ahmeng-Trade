@@ -239,6 +239,9 @@ export default function AdminPanel() {
 
   const [userErrors, setUserErrors] = useState<ValidationErrors<"name" | "username" | "password">>({});
   const [produkErrors, setProdukErrors] = useState<ValidationErrors<"nama" | "harga">>({});
+  const [transaksiErrors, setTransaksiErrors] = useState<
+    ValidationErrors<"produkId" | "namaPembeli" | "emailPembeli" | "totalHarga">
+  >({});
 
   const [userForm, setUserForm] = useState({ id: 0, name: "", username: "", password: "" });
   const [produkForm, setProdukForm] = useState({ id: 0, nama: "", harga: "" });

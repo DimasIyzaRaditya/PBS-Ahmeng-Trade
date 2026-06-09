@@ -112,5 +112,6 @@
 }
 
 .dangerButton {
+  border: 1px solid rgb(220 38 38 / 0.6);
 
 }

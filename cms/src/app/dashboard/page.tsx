@@ -552,6 +552,7 @@ export default function AdminPanel() {
   ]);
 
   const pagedUsers = paginate(filteredUsers, userTable.page, userTable.pageSize);
+  const pagedProduk = paginate(filteredProduk, produkTable.page, produkTable.pageSize);
   const handleUserSubmit = async (event: React.FormEvent) => {
     event.preventDefault();
     setError(null);

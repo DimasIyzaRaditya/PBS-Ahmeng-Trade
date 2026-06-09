@@ -595,6 +595,12 @@ export default function AdminPanel() {
     if (!payload.username) errors.username = "Wajib diisi";
     if (!userForm.id && payload.password.length < 6) errors.password = "Minimal 6 karakter";
 
+    setUserErrors(errors);
+    if (Object.keys(errors).length > 0) {
+      addToast("Periksa kembali form user", "error");
+      return;
+    }
+
     try {
       const res = await fetch(
         userForm.id ? `${API_USER}/${userForm.id}` : API_USER,

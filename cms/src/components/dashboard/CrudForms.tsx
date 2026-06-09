@@ -82,3 +82,46 @@ export function UserForm({
     </form>
   );
 }
+
+export function ProdukForm({
+  form,
+  errors,
+  saving,
+  onChange,
+  onSubmit,
+  onCancel,
+}: {
+  form: { id: number; nama: string; harga: string };
+  errors: ValidationErrors<"nama" | "harga">;
+  saving: boolean;
+  onChange: React.Dispatch<React.SetStateAction<{ id: number; nama: string; harga: string }>>;
+  onSubmit: (event: React.FormEvent) => void;
+  onCancel: () => void;
+}) {
+  return (
+    <form onSubmit={onSubmit} className={styles.panel}>
+      <h3 className={styles.chartTitle}>{form.id ? "Edit Produk" : "Tambah Produk"}</h3>
+      <div className={styles.formGrid}>
+        <FormField label="Nama Produk" error={errors.nama}>
+          <input
+            value={form.nama}
+            onChange={(event) => onChange((prev) => ({ ...prev, nama: event.target.value }))}
+            className={cx(styles.input, styles.fieldControl, errors.nama && styles.inputError)}
+            placeholder="Nama produk"
+          />
+        </FormField>
+        <FormField label="Harga" error={errors.harga}>
+          <input
+            type="number"
+            min={0}
+            value={form.harga}
+            onChange={(event) => onChange((prev) => ({ ...prev, harga: event.target.value }))}
+            className={cx(styles.input, styles.fieldControl, errors.harga && styles.inputError)}
+            placeholder="0"
+          />
+        </FormField>
+      </div>
+      <FormActions saving={saving} editing={form.id !== 0} addLabel="Tambah Produk" onCancel={onCancel} />
+    </form>
+  );
+}

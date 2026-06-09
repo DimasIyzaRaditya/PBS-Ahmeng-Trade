@@ -338,7 +338,7 @@ export default function AdminPanel() {
     } finally {
       setLoading(false);
     }
-  };
+  }, [addToast, handleLogout]);
 
   const handleUserSubmit = async (event: React.FormEvent) => {
     event.preventDefault();

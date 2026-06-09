@@ -661,22 +661,11 @@ export default function AdminPanel() {
 
     setSaving(true);
     try {
-      const res = await fetch(
-        produkForm.id ? `${API_PRODUK}/${produkForm.id}` : API_PRODUK,
-        {
-          method: produkForm.id ? "PATCH" : "POST",
-          headers: buildAuthHeaders(authToken, true),
-          body: JSON.stringify({
-            nama: produkForm.nama.trim(),
-            harga: hargaValue,
-          }),
-        },
-      );
-
-      if (res.status === 401) {
-        handleLogout();
-        return;
-      }
+      const res = await fetch(produkForm.id ? `${API_PRODUK}/${produkForm.id}` : API_PRODUK, {
+        method: produkForm.id ? "PATCH" : "POST",
+        headers: buildAuthHeaders(authToken, true),
+        body: JSON.stringify({ nama: produkForm.nama.trim(), harga: hargaValue }),
+      });
 
       if (res.status === 401) {
         handleLogout();
@@ -685,7 +674,7 @@ export default function AdminPanel() {
 
       if (!res.ok) {
         const errJson = await res.json();
-        throw new Error(errJson.message || "Gagal menyimpan user");
+        throw new Error(errJson.message || "Gagal menyimpan produk");
       }
 
       setUserForm({ id: 0, name: "", username: "", password: "" });

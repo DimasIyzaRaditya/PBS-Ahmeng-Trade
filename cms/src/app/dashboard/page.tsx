@@ -332,7 +332,9 @@ export default function AdminPanel() {
       setTransaksi(transaksiJson.data || []);
       if (showToast) addToast("Data berhasil diperbarui", "success");
     } catch (err) {
-      setError(err instanceof Error ? err.message : "Terjadi kesalahan");
+      const message = err instanceof Error ? err.message : "Terjadi kesalahan";
+      setError(message);
+      addToast(message, "error");
     } finally {
       setLoading(false);
     }

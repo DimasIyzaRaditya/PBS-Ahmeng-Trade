@@ -223,3 +223,9 @@
 .statCard {
   padding: 1.25rem;
 }
+
+.statLabel,
+.mutedText {
+  color: #737373;
+  font-size: 0.875rem;
+}

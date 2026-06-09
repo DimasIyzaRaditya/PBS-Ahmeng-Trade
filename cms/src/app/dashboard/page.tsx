@@ -442,10 +442,16 @@ export default function AdminPanel() {
     [produk],
   );
 
-    const dashboardStats = useMemo(() => {
-    const revenue = transaksi.reduce((sum, item) => sum + (item.totalHarga || 0), 0);
+  const dashboardStats = useMemo(() => {
+    const revenue = transaksi.reduce(
+      (sum, item) => sum + (item.totalHarga || 0),
+      0,
+    );
     const dailyMap = new Map<string, number>();
-    const topMap = new Map<number, { nama: string; count: number; revenue: number }>();
+    const topMap = new Map<
+      number,
+      { nama: string; count: number; revenue: number }
+    >();
 
     transaksi.forEach((item) => {
       const date = parseDate(item.createdAt);
@@ -454,13 +460,28 @@ export default function AdminPanel() {
         : "Tanpa tanggal";
       dailyMap.set(key, (dailyMap.get(key) || 0) + item.totalHarga);
 
-      const current = topMap.get(item.produkId) || { nama: productName(item.produkId), count: 0, revenue: 0 };
+      const current = topMap.get(item.produkId) || {
+        nama: productName(item.produkId),
+        count: 0,
+        revenue: 0,
+      };
       topMap.set(item.produkId, {
         nama: current.nama,
         count: current.count + 1,
         revenue: current.revenue + item.totalHarga,
       });
     });
+
+    return {
+      revenue,
+      dailySales: Array.from(dailyMap.entries())
+        .slice(-7)
+        .map(([label, total]) => ({ label, total })),
+      topProducts: Array.from(topMap.values())
+        .sort((a, b) => b.revenue - a.revenue)
+        .slice(0, 5),
+    };
+  }, [productName, transaksi]);
 
   const handleUserSubmit = async (event: React.FormEvent) => {
     event.preventDefault();

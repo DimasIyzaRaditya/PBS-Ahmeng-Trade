@@ -690,9 +690,10 @@ export default function AdminPanel() {
     }
   };
 
-  const handleProdukSubmit = async (event: React.FormEvent) => {
+  const handleTransaksiSubmit = async (event: React.FormEvent) => {
     event.preventDefault();
     setError(null);
+    const errors: ValidationErrors<"produkId" | "namaPembeli" | "emailPembeli" | "totalHarga"> = {};
 
     if (!authToken) {
       setError("Sesi tidak valid");

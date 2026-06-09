@@ -677,8 +677,10 @@ export default function AdminPanel() {
         throw new Error(errJson.message || "Gagal menyimpan produk");
       }
 
-      setUserForm({ id: 0, name: "", username: "", password: "" });
-      await loadAll(authToken);
+      setProdukForm({ id: 0, nama: "", harga: "" });
+      setProdukErrors({});
+      addToast(produkForm.id ? "Produk berhasil diperbarui" : "Produk berhasil ditambahkan", "success");
+      await loadAll(authToken, false);
     } catch (err) {
       setError(err instanceof Error ? err.message : "Terjadi kesalahan");
     }

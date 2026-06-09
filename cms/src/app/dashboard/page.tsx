@@ -658,6 +658,7 @@ export default function AdminPanel() {
       return;
     }
 
+    setSaving(true);
     try {
       const res = await fetch(
         userForm.id ? `${API_USER}/${userForm.id}` : API_USER,

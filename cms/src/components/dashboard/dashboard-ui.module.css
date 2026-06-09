@@ -178,3 +178,7 @@
 .tabButton {
   padding: 0.5rem 0.75rem;
 }
+
+.mobileTabButton {
+  padding: 0.5rem 1rem;
+}

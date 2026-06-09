@@ -187,3 +187,9 @@
 .mobileTabButton:hover {
   border-color: #404040;
 }
+
+.activeTab {
+  border-color: #e5e5e5;
+  background: #fafafa;
+  color: #171717;
+}

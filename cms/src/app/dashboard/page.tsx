@@ -146,6 +146,59 @@ function ToastStack({ toasts, onDismiss }: { toasts: Toast[]; onDismiss: (id: nu
   );
 }
 
+function PaginationControls({
+  page,
+  totalPages,
+  pageSize,
+  totalItems,
+  onPageChange,
+  onPageSizeChange,
+}: {
+  page: number;
+  totalPages: number;
+  pageSize: number;
+  totalItems: number;
+  onPageChange: (page: number) => void;
+  onPageSizeChange: (pageSize: number) => void;
+}) {
+  return (
+    <div className="mt-4 flex flex-col gap-3 border-t border-neutral-800 pt-4 text-sm text-neutral-400 sm:flex-row sm:items-center sm:justify-between">
+      <p>
+        {totalItems} data, halaman {page} dari {totalPages}
+      </p>
+      <div className="flex items-center gap-2">
+        <select
+          value={pageSize}
+          onChange={(event) => onPageSizeChange(Number(event.target.value))}
+          className="h-9 rounded-md border border-neutral-800 bg-neutral-950 px-2 text-neutral-100"
+        >
+          {PAGE_SIZE_OPTIONS.map((option) => (
+            <option key={option} value={option}>
+              {option}/hal
+            </option>
+          ))}
+        </select>
+        <button
+          type="button"
+          disabled={page <= 1}
+          onClick={() => onPageChange(page - 1)}
+          className="h-9 rounded-md border border-neutral-800 px-3 text-neutral-200 disabled:cursor-not-allowed disabled:opacity-40"
+        >
+          Prev
+        </button>
+        <button
+          type="button"
+          disabled={page >= totalPages}
+          onClick={() => onPageChange(page + 1)}
+          className="h-9 rounded-md border border-neutral-800 px-3 text-neutral-200 disabled:cursor-not-allowed disabled:opacity-40"
+        >
+          Next
+        </button>
+      </div>
+    </div>
+  );
+}
+
 export default function AdminPanel() {
   const router = useRouter();
   const [activeTab, setActiveTab] = useState<TabKey>("users");

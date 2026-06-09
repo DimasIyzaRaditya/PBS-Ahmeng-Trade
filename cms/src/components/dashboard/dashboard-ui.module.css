@@ -126,3 +126,8 @@
 .main {
   padding: 2.5rem 0;
 }
+
+.layout {
+  display: grid;
+  gap: 1.5rem;
+}

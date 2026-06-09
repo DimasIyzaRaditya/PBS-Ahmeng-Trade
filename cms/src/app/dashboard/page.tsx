@@ -79,6 +79,15 @@ function paginate<T>(items: T[], page: number, pageSize: number) {
   };
 }
 
+function EmptyState({ title, description }: { title: string; description: string }) {
+  return (
+    <div className="flex min-h-44 flex-col items-center justify-center rounded-md border border-dashed border-neutral-800 bg-neutral-950/60 px-4 py-8 text-center">
+      <p className="text-sm font-semibold text-neutral-200">{title}</p>
+      <p className="mt-1 max-w-sm text-sm text-neutral-500">{description}</p>
+    </div>
+  );
+}
+
 export default function AdminPanel() {
   const router = useRouter();
   const [activeTab, setActiveTab] = useState<TabKey>("users");

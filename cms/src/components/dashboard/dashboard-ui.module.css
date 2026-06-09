@@ -122,3 +122,7 @@
 .dangerButton:hover {
   border-color: #f87171;
 }
+
+.main {
+  padding: 2.5rem 0;
+}

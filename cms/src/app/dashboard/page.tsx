@@ -263,6 +263,13 @@ export default function AdminPanel() {
     []
   );
 
+  const addToast = useCallback((message: string, type: ToastType = "info") => {
+    toastIdRef.current += 1;
+    const id = toastIdRef.current;
+    setToasts((prev) => [...prev, { id, message, type }].slice(-4));
+    window.setTimeout(() => setToasts((prev) => prev.filter((toast) => toast.id !== id)), 3500);
+  }, []);
+  
   useEffect(() => {
     const token = localStorage.getItem("cms_token");
     const userRaw = localStorage.getItem("cms_user");

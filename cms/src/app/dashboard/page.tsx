@@ -340,6 +340,15 @@ export default function AdminPanel() {
     }
   }, [addToast, handleLogout]);
 
+    useEffect(() => {
+    const token = localStorage.getItem("cms_token");
+    const userRaw = localStorage.getItem("cms_user");
+    if (!token || !userRaw) {
+      setLoading(false);
+      setError("Sesi tidak valid. Silakan login ulang.");
+      return;
+    }
+
   const handleUserSubmit = async (event: React.FormEvent) => {
     event.preventDefault();
     setError(null);

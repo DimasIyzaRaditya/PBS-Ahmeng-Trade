@@ -550,6 +550,8 @@ export default function AdminPanel() {
     transaksiProdukFilter,
     transaksiTable.query,
   ]);
+
+  const pagedUsers = paginate(filteredUsers, userTable.page, userTable.pageSize);
   const handleUserSubmit = async (event: React.FormEvent) => {
     event.preventDefault();
     setError(null);

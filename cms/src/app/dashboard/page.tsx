@@ -60,13 +60,14 @@ const formatCurrency = (value: number) =>
     maximumFractionDigits: 0,
   }).format(value || 0);
 
-  const parseDate = (date?: string) => {
+const parseDate = (date?: string) => {
   if (!date) return null;
   const parsed = new Date(date);
   return Number.isNaN(parsed.getTime()) ? null : parsed;
 };
 
-const isValidEmail = (value: string) => /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(value);
+const isValidEmail = (value: string) =>
+  /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(value);
 
 function paginate<T>(items: T[], page: number, pageSize: number) {
   const totalPages = Math.max(1, Math.ceil(items.length / pageSize));
@@ -79,7 +80,13 @@ function paginate<T>(items: T[], page: number, pageSize: number) {
   };
 }
 
-function EmptyState({ title, description }: { title: string; description: string }) {
+function EmptyState({
+  title,
+  description,
+}: {
+  title: string;
+  description: string;
+}) {
   return (
     <div className="flex min-h-44 flex-col items-center justify-center rounded-md border border-dashed border-neutral-800 bg-neutral-950/60 px-4 py-8 text-center">
       <p className="text-sm font-semibold text-neutral-200">{title}</p>
@@ -92,7 +99,13 @@ function TableSkeleton({ columns = 4 }: { columns?: number }) {
   return (
     <div className="overflow-hidden rounded-md border border-neutral-800">
       {Array.from({ length: 6 }).map((_, row) => (
-        <div key={row} className="grid animate-pulse gap-3 border-b border-neutral-900 p-3" style={{ gridTemplateColumns: `repeat(${columns}, minmax(110px, 1fr))` }}>
+        <div
+          key={row}
+          className="grid animate-pulse gap-3 border-b border-neutral-900 p-3"
+          style={{
+            gridTemplateColumns: `repeat(${columns}, minmax(110px, 1fr))`,
+          }}
+        >
           {Array.from({ length: columns }).map((__, column) => (
             <div key={column} className="h-4 rounded bg-neutral-800/80" />
           ))}
@@ -122,7 +135,13 @@ function FormField({
   );
 }
 
-function ToastStack({ toasts, onDismiss }: { toasts: Toast[]; onDismiss: (id: number) => void }) {
+function ToastStack({
+  toasts,
+  onDismiss,
+}: {
+  toasts: Toast[];
+  onDismiss: (id: number) => void;
+}) {
   if (toasts.length === 0) return null;
 
   return (
@@ -135,8 +154,8 @@ function ToastStack({ toasts, onDismiss }: { toasts: Toast[]; onDismiss: (id: nu
             toast.type === "success"
               ? "border-emerald-700 bg-emerald-950/90 text-emerald-100"
               : toast.type === "error"
-              ? "border-red-800 bg-red-950/90 text-red-100"
-              : "border-neutral-700 bg-neutral-900/90 text-neutral-100"
+                ? "border-red-800 bg-red-950/90 text-red-100"
+                : "border-neutral-700 bg-neutral-900/90 text-neutral-100"
           }`}
         >
           {toast.message}
@@ -199,7 +218,17 @@ function PaginationControls({
   );
 }
 
-function ChartBar({ label, value, max, caption }: { label: string; value: number; max: number; caption: string }) {
+function ChartBar({
+  label,
+  value,
+  max,
+  caption,
+}: {
+  label: string;
+  value: number;
+  max: number;
+  caption: string;
+}) {
   const height = max > 0 ? Math.max(8, Math.round((value / max) * 120)) : 8;
 
   return (
@@ -229,21 +258,42 @@ export default function AdminPanel() {
   const [produk, setProduk] = useState<Produk[]>([]);
   const [transaksi, setTransaksi] = useState<Transaksi[]>([]);
 
-  const [userTable, setUserTable] = useState<PaginationState>({ query: "", page: 1, pageSize: 5 });
-  const [produkTable, setProdukTable] = useState<PaginationState>({ query: "", page: 1, pageSize: 5 });
-  const [transaksiTable, setTransaksiTable] = useState<PaginationState>({ query: "", page: 1, pageSize: 5 });
+  const [userTable, setUserTable] = useState<PaginationState>({
+    query: "",
+    page: 1,
+    pageSize: 5,
+  });
+  const [produkTable, setProdukTable] = useState<PaginationState>({
+    query: "",
+    page: 1,
+    pageSize: 5,
+  });
+  const [transaksiTable, setTransaksiTable] = useState<PaginationState>({
+    query: "",
+    page: 1,
+    pageSize: 5,
+  });
   const [userFilter, setUserFilter] = useState("all");
   const [produkFilter, setProdukFilter] = useState("all");
   const [transaksiProdukFilter, setTransaksiProdukFilter] = useState("all");
   const [transaksiDateFilter, setTransaksiDateFilter] = useState("all");
 
-  const [userErrors, setUserErrors] = useState<ValidationErrors<"name" | "username" | "password">>({});
-  const [produkErrors, setProdukErrors] = useState<ValidationErrors<"nama" | "harga">>({});
+  const [userErrors, setUserErrors] = useState<
+    ValidationErrors<"name" | "username" | "password">
+  >({});
+  const [produkErrors, setProdukErrors] = useState<
+    ValidationErrors<"nama" | "harga">
+  >({});
   const [transaksiErrors, setTransaksiErrors] = useState<
     ValidationErrors<"produkId" | "namaPembeli" | "emailPembeli" | "totalHarga">
   >({});
 
-  const [userForm, setUserForm] = useState({ id: 0, name: "", username: "", password: "" });
+  const [userForm, setUserForm] = useState({
+    id: 0,
+    name: "",
+    username: "",
+    password: "",
+  });
   const [produkForm, setProdukForm] = useState({ id: 0, nama: "", harga: "" });
   const [transaksiForm, setTransaksiForm] = useState({
     id: 0,
@@ -260,14 +310,17 @@ export default function AdminPanel() {
       { key: "produk" as const, label: "Produk" },
       { key: "transaksi" as const, label: "Transaksi" },
     ],
-    []
+    [],
   );
 
   const addToast = useCallback((message: string, type: ToastType = "info") => {
     toastIdRef.current += 1;
     const id = toastIdRef.current;
     setToasts((prev) => [...prev, { id, message, type }].slice(-4));
-    window.setTimeout(() => setToasts((prev) => prev.filter((toast) => toast.id !== id)), 3500);
+    window.setTimeout(
+      () => setToasts((prev) => prev.filter((toast) => toast.id !== id)),
+      3500,
+    );
   }, []);
 
   useEffect(() => {
@@ -302,45 +355,62 @@ export default function AdminPanel() {
     router.replace("/login");
   }, [router]);
 
-  const loadAll = useCallback(async (token: string, showToast = true) => {
-    setLoading(true);
-    setError(null);
-    try {
-      const [userRes, produkRes, transaksiRes] = await Promise.all([
-        fetch(API_USER, { cache: "no-store", headers: buildAuthHeaders(token) }),
-        fetch(API_PRODUK, { cache: "no-store", headers: buildAuthHeaders(token) }),
-        fetch(API_TRANSAKSI, { cache: "no-store", headers: buildAuthHeaders(token) }),
-      ]);
+  const loadAll = useCallback(
+    async (token: string, showToast = true) => {
+      setLoading(true);
+      setError(null);
+      try {
+        const [userRes, produkRes, transaksiRes] = await Promise.all([
+          fetch(API_USER, {
+            cache: "no-store",
+            headers: buildAuthHeaders(token),
+          }),
+          fetch(API_PRODUK, {
+            cache: "no-store",
+            headers: buildAuthHeaders(token),
+          }),
+          fetch(API_TRANSAKSI, {
+            cache: "no-store",
+            headers: buildAuthHeaders(token),
+          }),
+        ]);
 
-      if (userRes.status === 401 || produkRes.status === 401 || transaksiRes.status === 401) {
-        handleLogout();
-        return;
+        if (
+          userRes.status === 401 ||
+          produkRes.status === 401 ||
+          transaksiRes.status === 401
+        ) {
+          handleLogout();
+          return;
+        }
+
+        if (!userRes.ok || !produkRes.ok || !transaksiRes.ok) {
+          throw new Error("Gagal memuat data dari API");
+        }
+
+        const [userJson, produkJson, transaksiJson] = await Promise.all([
+          userRes.json(),
+          produkRes.json(),
+          transaksiRes.json(),
+        ]);
+
+        setUsers(userJson.data || []);
+        setProduk(produkJson.data || []);
+        setTransaksi(transaksiJson.data || []);
+        if (showToast) addToast("Data berhasil diperbarui", "success");
+      } catch (err) {
+        const message =
+          err instanceof Error ? err.message : "Terjadi kesalahan";
+        setError(message);
+        addToast(message, "error");
+      } finally {
+        setLoading(false);
       }
+    },
+    [addToast, handleLogout],
+  );
 
-      if (!userRes.ok || !produkRes.ok || !transaksiRes.ok) {
-        throw new Error("Gagal memuat data dari API");
-      }
-
-      const [userJson, produkJson, transaksiJson] = await Promise.all([
-        userRes.json(),
-        produkRes.json(),
-        transaksiRes.json(),
-      ]);
-
-      setUsers(userJson.data || []);
-      setProduk(produkJson.data || []);
-      setTransaksi(transaksiJson.data || []);
-      if (showToast) addToast("Data berhasil diperbarui", "success");
-    } catch (err) {
-      const message = err instanceof Error ? err.message : "Terjadi kesalahan";
-      setError(message);
-      addToast(message, "error");
-    } finally {
-      setLoading(false);
-    }
-  }, [addToast, handleLogout]);
-
-    useEffect(() => {
+  useEffect(() => {
     const token = localStorage.getItem("cms_token");
     const userRaw = localStorage.getItem("cms_user");
     if (!token || !userRaw) {
@@ -349,7 +419,7 @@ export default function AdminPanel() {
       return;
     }
 
-        try {
+    try {
       const user = JSON.parse(userRaw) as { username?: string };
       if (!user.username || user.username.toLowerCase() !== "admin") {
         setLoading(false);
@@ -361,6 +431,10 @@ export default function AdminPanel() {
       setError("Sesi tidak valid. Silakan login ulang.");
       return;
     }
+
+    setAuthToken(token);
+    void loadAll(token, false);
+  }, [loadAll]);
 
   const handleUserSubmit = async (event: React.FormEvent) => {
     event.preventDefault();
@@ -389,7 +463,7 @@ export default function AdminPanel() {
           method: userForm.id ? "PATCH" : "POST",
           headers: buildAuthHeaders(authToken, true),
           body: JSON.stringify(payload),
-        }
+        },
       );
 
       if (res.status === 401) {
@@ -436,7 +510,7 @@ export default function AdminPanel() {
           method: produkForm.id ? "PATCH" : "POST",
           headers: buildAuthHeaders(authToken, true),
           body: JSON.stringify(payload),
-        }
+        },
       );
 
       if (res.status === 401) {
@@ -487,12 +561,14 @@ export default function AdminPanel() {
 
     try {
       const res = await fetch(
-        transaksiForm.id ? `${API_TRANSAKSI}/${transaksiForm.id}` : API_TRANSAKSI,
+        transaksiForm.id
+          ? `${API_TRANSAKSI}/${transaksiForm.id}`
+          : API_TRANSAKSI,
         {
           method: transaksiForm.id ? "PATCH" : "POST",
           headers: buildAuthHeaders(authToken, true),
           body: JSON.stringify(payload),
-        }
+        },
       );
 
       if (res.status === 401) {
@@ -505,14 +581,23 @@ export default function AdminPanel() {
         throw new Error(errJson.message || "Gagal menyimpan transaksi");
       }
 
-      setTransaksiForm({ id: 0, produkId: "", namaPembeli: "", emailPembeli: "", totalHarga: "" });
+      setTransaksiForm({
+        id: 0,
+        produkId: "",
+        namaPembeli: "",
+        emailPembeli: "",
+        totalHarga: "",
+      });
       await loadAll(authToken);
     } catch (err) {
       setError(err instanceof Error ? err.message : "Terjadi kesalahan");
     }
   };
 
-  const handleDelete = async (resource: "user" | "produk" | "transaksi", id: number) => {
+  const handleDelete = async (
+    resource: "user" | "produk" | "transaksi",
+    id: number,
+  ) => {
     if (!window.confirm("Yakin ingin menghapus data ini?")) return;
     setError(null);
 
@@ -525,8 +610,8 @@ export default function AdminPanel() {
       resource === "user"
         ? `${API_USER}/${id}`
         : resource === "produk"
-        ? `${API_PRODUK}/${id}`
-        : `${API_TRANSAKSI}/${id}`;
+          ? `${API_PRODUK}/${id}`
+          : `${API_TRANSAKSI}/${id}`;
 
     try {
       const res = await fetch(url, {
@@ -558,8 +643,12 @@ export default function AdminPanel() {
               className="h-10 w-10 rounded-full border border-neutral-800 bg-neutral-900"
             />
             <div>
-              <p className="text-sm uppercase tracking-[0.2em] text-neutral-500">Ahmeng Trade</p>
-              <h1 className="text-3xl font-semibold text-neutral-50">CMS Admin Panel</h1>
+              <p className="text-sm uppercase tracking-[0.2em] text-neutral-500">
+                Ahmeng Trade
+              </p>
+              <h1 className="text-3xl font-semibold text-neutral-50">
+                CMS Admin Panel
+              </h1>
             </div>
           </div>
           <div className="flex items-center gap-4 text-right text-sm text-neutral-400">
@@ -581,7 +670,9 @@ export default function AdminPanel() {
         <div className="grid gap-6 lg:grid-cols-[220px_1fr]">
           <aside className="hidden flex-col gap-4 rounded-2xl border border-neutral-800 bg-neutral-900/40 p-5 lg:flex">
             <div>
-              <p className="text-xs uppercase tracking-[0.2em] text-neutral-500">Navigasi</p>
+              <p className="text-xs uppercase tracking-[0.2em] text-neutral-500">
+                Navigasi
+              </p>
               <p className="mt-2 text-sm text-neutral-300">
                 Kelola data user, produk, dan transaksi dalam satu panel.
               </p>
@@ -635,7 +726,9 @@ export default function AdminPanel() {
             {activeTab === "users" && (
               <section className="grid gap-6 lg:grid-cols-[1.2fr_0.8fr]">
                 <div className="rounded-2xl border border-neutral-800 bg-neutral-900/40 p-6">
-                  <h2 className="mb-4 text-xl font-semibold text-neutral-50">Daftar User</h2>
+                  <h2 className="mb-4 text-xl font-semibold text-neutral-50">
+                    Daftar User
+                  </h2>
                   <div className="overflow-auto">
                     <table className="w-full text-left text-sm">
                       <thead className="text-neutral-400">
@@ -649,16 +742,28 @@ export default function AdminPanel() {
                       <tbody>
                         {users.length === 0 ? (
                           <tr>
-                            <td colSpan={4} className="px-2 py-6 text-center text-neutral-500">
+                            <td
+                              colSpan={4}
+                              className="px-2 py-6 text-center text-neutral-500"
+                            >
                               Belum ada user.
                             </td>
                           </tr>
                         ) : (
                           users.map((user) => (
-                            <tr key={user.id} className="border-b border-neutral-800/70">
-                              <td className="px-2 py-3 text-neutral-200">{user.id}</td>
-                              <td className="px-2 py-3 text-neutral-100">{user.name}</td>
-                              <td className="px-2 py-3 text-neutral-300">{user.username}</td>
+                            <tr
+                              key={user.id}
+                              className="border-b border-neutral-800/70"
+                            >
+                              <td className="px-2 py-3 text-neutral-200">
+                                {user.id}
+                              </td>
+                              <td className="px-2 py-3 text-neutral-100">
+                                {user.name}
+                              </td>
+                              <td className="px-2 py-3 text-neutral-300">
+                                {user.username}
+                              </td>
                               <td className="px-2 py-3">
                                 <div className="flex gap-2">
                                   <button
@@ -675,7 +780,9 @@ export default function AdminPanel() {
                                     Edit
                                   </button>
                                   <button
-                                    onClick={() => handleDelete("user", user.id)}
+                                    onClick={() =>
+                                      handleDelete("user", user.id)
+                                    }
                                     className="rounded-full border border-red-600/60 px-3 py-1 text-xs text-red-300 hover:border-red-400"
                                   >
                                     Hapus
@@ -703,7 +810,10 @@ export default function AdminPanel() {
                       <input
                         value={userForm.name}
                         onChange={(event) =>
-                          setUserForm((prev) => ({ ...prev, name: event.target.value }))
+                          setUserForm((prev) => ({
+                            ...prev,
+                            name: event.target.value,
+                          }))
                         }
                         className="mt-2 w-full rounded-xl border border-neutral-800 bg-neutral-950 px-3 py-2 text-neutral-100"
                         placeholder="Nama lengkap"
@@ -714,7 +824,10 @@ export default function AdminPanel() {
                       <input
                         value={userForm.username}
                         onChange={(event) =>
-                          setUserForm((prev) => ({ ...prev, username: event.target.value }))
+                          setUserForm((prev) => ({
+                            ...prev,
+                            username: event.target.value,
+                          }))
                         }
                         className="mt-2 w-full rounded-xl border border-neutral-800 bg-neutral-950 px-3 py-2 text-neutral-100"
                         placeholder="username"
@@ -726,10 +839,17 @@ export default function AdminPanel() {
                         type="password"
                         value={userForm.password}
                         onChange={(event) =>
-                          setUserForm((prev) => ({ ...prev, password: event.target.value }))
+                          setUserForm((prev) => ({
+                            ...prev,
+                            password: event.target.value,
+                          }))
                         }
                         className="mt-2 w-full rounded-xl border border-neutral-800 bg-neutral-950 px-3 py-2 text-neutral-100"
-                        placeholder={userForm.id ? "Kosongkan jika tidak diganti" : "Password"}
+                        placeholder={
+                          userForm.id
+                            ? "Kosongkan jika tidak diganti"
+                            : "Password"
+                        }
                       />
                     </label>
                   </div>
@@ -743,7 +863,14 @@ export default function AdminPanel() {
                     {userForm.id !== 0 && (
                       <button
                         type="button"
-                        onClick={() => setUserForm({ id: 0, name: "", username: "", password: "" })}
+                        onClick={() =>
+                          setUserForm({
+                            id: 0,
+                            name: "",
+                            username: "",
+                            password: "",
+                          })
+                        }
                         className="rounded-full border border-neutral-700 px-4 py-2 text-sm text-neutral-200"
                       >
                         Batal
@@ -757,7 +884,9 @@ export default function AdminPanel() {
             {activeTab === "produk" && (
               <section className="grid gap-6 lg:grid-cols-[1.2fr_0.8fr]">
                 <div className="rounded-2xl border border-neutral-800 bg-neutral-900/40 p-6">
-                  <h2 className="mb-4 text-xl font-semibold text-neutral-50">Daftar Produk</h2>
+                  <h2 className="mb-4 text-xl font-semibold text-neutral-50">
+                    Daftar Produk
+                  </h2>
                   <div className="overflow-auto">
                     <table className="w-full text-left text-sm">
                       <thead className="text-neutral-400">
@@ -771,16 +900,28 @@ export default function AdminPanel() {
                       <tbody>
                         {produk.length === 0 ? (
                           <tr>
-                            <td colSpan={4} className="px-2 py-6 text-center text-neutral-500">
+                            <td
+                              colSpan={4}
+                              className="px-2 py-6 text-center text-neutral-500"
+                            >
                               Belum ada produk.
                             </td>
                           </tr>
                         ) : (
                           produk.map((item) => (
-                            <tr key={item.id} className="border-b border-neutral-800/70">
-                              <td className="px-2 py-3 text-neutral-200">{item.id}</td>
-                              <td className="px-2 py-3 text-neutral-100">{item.nama}</td>
-                              <td className="px-2 py-3 text-neutral-300">{item.harga.toLocaleString("id-ID")}</td>
+                            <tr
+                              key={item.id}
+                              className="border-b border-neutral-800/70"
+                            >
+                              <td className="px-2 py-3 text-neutral-200">
+                                {item.id}
+                              </td>
+                              <td className="px-2 py-3 text-neutral-100">
+                                {item.nama}
+                              </td>
+                              <td className="px-2 py-3 text-neutral-300">
+                                {item.harga.toLocaleString("id-ID")}
+                              </td>
                               <td className="px-2 py-3">
                                 <div className="flex gap-2">
                                   <button
@@ -796,7 +937,9 @@ export default function AdminPanel() {
                                     Edit
                                   </button>
                                   <button
-                                    onClick={() => handleDelete("produk", item.id)}
+                                    onClick={() =>
+                                      handleDelete("produk", item.id)
+                                    }
                                     className="rounded-full border border-red-600/60 px-3 py-1 text-xs text-red-300 hover:border-red-400"
                                   >
                                     Hapus
@@ -824,7 +967,10 @@ export default function AdminPanel() {
                       <input
                         value={produkForm.nama}
                         onChange={(event) =>
-                          setProdukForm((prev) => ({ ...prev, nama: event.target.value }))
+                          setProdukForm((prev) => ({
+                            ...prev,
+                            nama: event.target.value,
+                          }))
                         }
                         className="mt-2 w-full rounded-xl border border-neutral-800 bg-neutral-950 px-3 py-2 text-neutral-100"
                         placeholder="Nama produk"
@@ -837,7 +983,10 @@ export default function AdminPanel() {
                         min={0}
                         value={produkForm.harga}
                         onChange={(event) =>
-                          setProdukForm((prev) => ({ ...prev, harga: event.target.value }))
+                          setProdukForm((prev) => ({
+                            ...prev,
+                            harga: event.target.value,
+                          }))
                         }
                         className="mt-2 w-full rounded-xl border border-neutral-800 bg-neutral-950 px-3 py-2 text-neutral-100"
                         placeholder="0"
@@ -854,7 +1003,9 @@ export default function AdminPanel() {
                     {produkForm.id !== 0 && (
                       <button
                         type="button"
-                        onClick={() => setProdukForm({ id: 0, nama: "", harga: "" })}
+                        onClick={() =>
+                          setProdukForm({ id: 0, nama: "", harga: "" })
+                        }
                         className="rounded-full border border-neutral-700 px-4 py-2 text-sm text-neutral-200"
                       >
                         Batal
@@ -868,7 +1019,9 @@ export default function AdminPanel() {
             {activeTab === "transaksi" && (
               <section className="grid gap-6 lg:grid-cols-[1.2fr_0.8fr]">
                 <div className="rounded-2xl border border-neutral-800 bg-neutral-900/40 p-6">
-                  <h2 className="mb-4 text-xl font-semibold text-neutral-50">Daftar Transaksi</h2>
+                  <h2 className="mb-4 text-xl font-semibold text-neutral-50">
+                    Daftar Transaksi
+                  </h2>
                   <div className="overflow-auto">
                     <table className="w-full text-left text-sm">
                       <thead className="text-neutral-400">
@@ -883,20 +1036,33 @@ export default function AdminPanel() {
                       <tbody>
                         {transaksi.length === 0 ? (
                           <tr>
-                            <td colSpan={5} className="px-2 py-6 text-center text-neutral-500">
+                            <td
+                              colSpan={5}
+                              className="px-2 py-6 text-center text-neutral-500"
+                            >
                               Belum ada transaksi.
                             </td>
                           </tr>
                         ) : (
                           transaksi.map((item) => (
-                            <tr key={item.id} className="border-b border-neutral-800/70">
-                              <td className="px-2 py-3 text-neutral-200">{item.id}</td>
+                            <tr
+                              key={item.id}
+                              className="border-b border-neutral-800/70"
+                            >
+                              <td className="px-2 py-3 text-neutral-200">
+                                {item.id}
+                              </td>
                               <td className="px-2 py-3 text-neutral-100">
-                                {produk.find((p) => p.id === item.produkId)?.nama || `#${item.produkId}`}
+                                {produk.find((p) => p.id === item.produkId)
+                                  ?.nama || `#${item.produkId}`}
                               </td>
                               <td className="px-2 py-3 text-neutral-300">
-                                <p className="text-neutral-100">{item.namaPembeli}</p>
-                                <p className="text-xs text-neutral-500">{item.emailPembeli}</p>
+                                <p className="text-neutral-100">
+                                  {item.namaPembeli}
+                                </p>
+                                <p className="text-xs text-neutral-500">
+                                  {item.emailPembeli}
+                                </p>
                               </td>
                               <td className="px-2 py-3 text-neutral-200">
                                 {item.totalHarga.toLocaleString("id-ID")}
@@ -918,7 +1084,9 @@ export default function AdminPanel() {
                                     Edit
                                   </button>
                                   <button
-                                    onClick={() => handleDelete("transaksi", item.id)}
+                                    onClick={() =>
+                                      handleDelete("transaksi", item.id)
+                                    }
                                     className="rounded-full border border-red-600/60 px-3 py-1 text-xs text-red-300 hover:border-red-400"
                                   >
                                     Hapus
@@ -946,7 +1114,10 @@ export default function AdminPanel() {
                       <select
                         value={transaksiForm.produkId}
                         onChange={(event) =>
-                          setTransaksiForm((prev) => ({ ...prev, produkId: event.target.value }))
+                          setTransaksiForm((prev) => ({
+                            ...prev,
+                            produkId: event.target.value,
+                          }))
                         }
                         className="mt-2 w-full rounded-xl border border-neutral-800 bg-neutral-950 px-3 py-2 text-neutral-100"
                       >
@@ -963,7 +1134,10 @@ export default function AdminPanel() {
                       <input
                         value={transaksiForm.namaPembeli}
                         onChange={(event) =>
-                          setTransaksiForm((prev) => ({ ...prev, namaPembeli: event.target.value }))
+                          setTransaksiForm((prev) => ({
+                            ...prev,
+                            namaPembeli: event.target.value,
+                          }))
                         }
                         className="mt-2 w-full rounded-xl border border-neutral-800 bg-neutral-950 px-3 py-2 text-neutral-100"
                         placeholder="Nama pembeli"
@@ -975,7 +1149,10 @@ export default function AdminPanel() {
                         type="email"
                         value={transaksiForm.emailPembeli}
                         onChange={(event) =>
-                          setTransaksiForm((prev) => ({ ...prev, emailPembeli: event.target.value }))
+                          setTransaksiForm((prev) => ({
+                            ...prev,
+                            emailPembeli: event.target.value,
+                          }))
                         }
                         className="mt-2 w-full rounded-xl border border-neutral-800 bg-neutral-950 px-3 py-2 text-neutral-100"
                         placeholder="email@contoh.com"
@@ -988,7 +1165,10 @@ export default function AdminPanel() {
                         min={0}
                         value={transaksiForm.totalHarga}
                         onChange={(event) =>
-                          setTransaksiForm((prev) => ({ ...prev, totalHarga: event.target.value }))
+                          setTransaksiForm((prev) => ({
+                            ...prev,
+                            totalHarga: event.target.value,
+                          }))
                         }
                         className="mt-2 w-full rounded-xl border border-neutral-800 bg-neutral-950 px-3 py-2 text-neutral-100"
                         placeholder="0"
@@ -1000,7 +1180,9 @@ export default function AdminPanel() {
                       type="submit"
                       className="rounded-full bg-neutral-50 px-4 py-2 text-sm font-semibold text-neutral-900 hover:bg-white"
                     >
-                      {transaksiForm.id ? "Simpan Perubahan" : "Tambah Transaksi"}
+                      {transaksiForm.id
+                        ? "Simpan Perubahan"
+                        : "Tambah Transaksi"}
                     </button>
                     {transaksiForm.id !== 0 && (
                       <button

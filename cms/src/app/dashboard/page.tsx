@@ -747,6 +747,11 @@ export default function AdminPanel() {
         }),
       });
 
+      if (res.status === 401) {
+        handleLogout();
+        return;
+      }
+
     const hargaValue = Number(produkForm.harga);
     if (!produkForm.nama.trim() || Number.isNaN(hargaValue)) {
       setError("Nama dan harga wajib diisi");

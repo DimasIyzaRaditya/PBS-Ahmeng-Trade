@@ -592,6 +592,7 @@ export default function AdminPanel() {
     };
 
     if (!payload.name) errors.name = "Wajib diisi";
+    if (!payload.username) errors.username = "Wajib diisi";
 
     try {
       const res = await fetch(

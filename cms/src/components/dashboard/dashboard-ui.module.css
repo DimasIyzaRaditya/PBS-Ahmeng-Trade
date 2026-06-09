@@ -182,3 +182,8 @@
 .mobileTabButton {
   padding: 0.5rem 1rem;
 }
+
+.tabButton:hover,
+.mobileTabButton:hover {
+  border-color: #404040;
+}

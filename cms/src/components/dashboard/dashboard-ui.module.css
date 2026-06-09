@@ -52,5 +52,6 @@
 }
 
 .headerActions {
+  display: flex;
 
 }

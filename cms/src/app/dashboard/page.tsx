@@ -330,6 +330,7 @@ export default function AdminPanel() {
       setUsers(userJson.data || []);
       setProduk(produkJson.data || []);
       setTransaksi(transaksiJson.data || []);
+      if (showToast) addToast("Data berhasil diperbarui", "success");
     } catch (err) {
       setError(err instanceof Error ? err.message : "Terjadi kesalahan");
     } finally {

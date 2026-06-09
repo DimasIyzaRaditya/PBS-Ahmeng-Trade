@@ -454,6 +454,14 @@ export default function AdminPanel() {
         : "Tanpa tanggal";
       dailyMap.set(key, (dailyMap.get(key) || 0) + item.totalHarga);
 
+      const current = topMap.get(item.produkId) || { nama: productName(item.produkId), count: 0, revenue: 0 };
+      topMap.set(item.produkId, {
+        nama: current.nama,
+        count: current.count + 1,
+        revenue: current.revenue + item.totalHarga,
+      });
+    });
+
   const handleUserSubmit = async (event: React.FormEvent) => {
     event.preventDefault();
     setError(null);

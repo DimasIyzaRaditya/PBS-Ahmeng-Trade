@@ -593,6 +593,7 @@ export default function AdminPanel() {
 
     if (!payload.name) errors.name = "Wajib diisi";
     if (!payload.username) errors.username = "Wajib diisi";
+    if (!userForm.id && payload.password.length < 6) errors.password = "Minimal 6 karakter";
 
     try {
       const res = await fetch(

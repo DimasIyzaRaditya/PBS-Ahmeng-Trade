@@ -238,6 +238,7 @@ export default function AdminPanel() {
   const [transaksiDateFilter, setTransaksiDateFilter] = useState("all");
 
   const [userErrors, setUserErrors] = useState<ValidationErrors<"name" | "username" | "password">>({});
+  const [produkErrors, setProdukErrors] = useState<ValidationErrors<"nama" | "harga">>({});
 
   const [userForm, setUserForm] = useState({ id: 0, name: "", username: "", password: "" });
   const [produkForm, setProdukForm] = useState({ id: 0, nama: "", harga: "" });

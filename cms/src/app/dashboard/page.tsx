@@ -757,6 +757,12 @@ export default function AdminPanel() {
         throw new Error(errJson.message || "Gagal menyimpan transaksi");
       }
 
+      setTransaksiForm({ id: 0, produkId: "", namaPembeli: "", emailPembeli: "", totalHarga: "" });
+      setTransaksiErrors({});
+      addToast(transaksiForm.id ? "Transaksi berhasil diperbarui" : "Transaksi berhasil ditambahkan", "success");
+      await loadAll(authToken, false);
+    } catch (err) {
+
     const hargaValue = Number(produkForm.harga);
     if (!produkForm.nama.trim() || Number.isNaN(hargaValue)) {
       setError("Nama dan harga wajib diisi");

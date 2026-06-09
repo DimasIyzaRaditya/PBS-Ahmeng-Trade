@@ -33,7 +33,7 @@ function FormActions({
   );
 }
 
-function UserForm({
+export function UserForm({
   form,
   errors,
   saving,

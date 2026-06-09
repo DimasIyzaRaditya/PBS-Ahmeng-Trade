@@ -700,6 +700,8 @@ export default function AdminPanel() {
       return;
     }
 
+    const produkIdValue = Number(transaksiForm.produkId);
+
     const hargaValue = Number(produkForm.harga);
     if (!produkForm.nama.trim() || Number.isNaN(hargaValue)) {
       setError("Nama dan harga wajib diisi");

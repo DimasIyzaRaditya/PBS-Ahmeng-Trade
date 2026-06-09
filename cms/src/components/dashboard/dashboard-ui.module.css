@@ -81,3 +81,8 @@
   color: #e5e5e5;
   background: transparent;
 }
+
+.button {
+  padding: 0.5rem 1rem;
+  font-size: 0.875rem;
+}

@@ -500,16 +500,56 @@ export default function AdminPanel() {
   const filteredProduk = useMemo(() => {
     const query = produkTable.query.toLowerCase().trim();
     return produk.filter((item) => {
-      const matchesSearch = item.nama.toLowerCase().includes(query) || String(item.id).includes(query);
+      const matchesSearch =
+        item.nama.toLowerCase().includes(query) ||
+        String(item.id).includes(query);
       const matchesFilter =
         produkFilter === "all" ||
         (produkFilter === "low" && item.harga < 100000) ||
-        (produkFilter === "mid" && item.harga >= 100000 && item.harga <= 500000) ||
+        (produkFilter === "mid" &&
+          item.harga >= 100000 &&
+          item.harga <= 500000) ||
         (produkFilter === "high" && item.harga > 500000);
       return matchesSearch && matchesFilter;
     });
   }, [produk, produkFilter, produkTable.query]);
 
+  const filteredTransaksi = useMemo(() => {
+    const now = new Date();
+    const query = transaksiTable.query.toLowerCase().trim();
+    return transaksi.filter((item) => {
+      const date = parseDate(item.createdAt);
+      const matchesSearch = [
+        productName(item.produkId),
+        item.namaPembeli,
+        item.emailPembeli,
+        String(item.id),
+      ]
+        .join(" ")
+        .toLowerCase()
+        .includes(query);
+      const matchesProduct =
+        transaksiProdukFilter === "all" ||
+        item.produkId === Number(transaksiProdukFilter);
+      const matchesDate =
+        transaksiDateFilter === "all" ||
+        (date &&
+          ((transaksiDateFilter === "today" &&
+            date.toDateString() === now.toDateString()) ||
+            (transaksiDateFilter === "week" &&
+              now.getTime() - date.getTime() <= 7 * 24 * 60 * 60 * 1000) ||
+            (transaksiDateFilter === "month" &&
+              date.getMonth() === now.getMonth() &&
+              date.getFullYear() === now.getFullYear())));
+      return matchesSearch && matchesProduct && matchesDate;
+    });
+  }, [
+    productName,
+    transaksi,
+    transaksiDateFilter,
+    transaksiProdukFilter,
+    transaksiTable.query,
+  ]);
   const handleUserSubmit = async (event: React.FormEvent) => {
     event.preventDefault();
     setError(null);

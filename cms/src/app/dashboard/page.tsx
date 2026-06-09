@@ -622,6 +622,7 @@ export default function AdminPanel() {
       setUserForm({ id: 0, name: "", username: "", password: "" });
       setUserErrors({});
       addToast(userForm.id ? "User berhasil diperbarui" : "User berhasil ditambahkan", "success");
+      await loadAll(authToken, false);
 
     try {
       const res = await fetch(

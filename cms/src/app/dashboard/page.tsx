@@ -233,6 +233,7 @@ export default function AdminPanel() {
   const [produkTable, setProdukTable] = useState<PaginationState>({ query: "", page: 1, pageSize: 5 });
   const [transaksiTable, setTransaksiTable] = useState<PaginationState>({ query: "", page: 1, pageSize: 5 });
   const [userFilter, setUserFilter] = useState("all");
+  const [produkFilter, setProdukFilter] = useState("all");
 
   const [userForm, setUserForm] = useState({ id: 0, name: "", username: "", password: "" });
   const [produkForm, setProdukForm] = useState({ id: 0, nama: "", harga: "" });

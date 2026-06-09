@@ -42,7 +42,7 @@ interface PaginationState {
   pageSize: number;
 }
 
-const API_BASE ="http://localhost:3000";
+const API_BASE = "http://localhost:3000";
 const API_USER = `${API_BASE}/user`;
 const API_PRODUK = `${API_BASE}/produk`;
 const API_TRANSAKSI = `${API_BASE}/transaksi`;
@@ -52,6 +52,13 @@ const buildAuthHeaders = (token: string, includeJson = false) => ({
   ...(includeJson ? { "Content-Type": "application/json" } : {}),
   Authorization: `Bearer ${token}`,
 });
+
+const formatCurrency = (value: number) =>
+  new Intl.NumberFormat("id-ID", {
+    style: "currency",
+    currency: "IDR",
+    maximumFractionDigits: 0,
+  }).format(value || 0);
 
 export default function AdminPanel() {
   const router = useRouter();

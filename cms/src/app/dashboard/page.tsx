@@ -497,6 +497,19 @@ export default function AdminPanel() {
     });
   }, [userFilter, userTable.query, users]);
 
+  const filteredProduk = useMemo(() => {
+    const query = produkTable.query.toLowerCase().trim();
+    return produk.filter((item) => {
+      const matchesSearch = item.nama.toLowerCase().includes(query) || String(item.id).includes(query);
+      const matchesFilter =
+        produkFilter === "all" ||
+        (produkFilter === "low" && item.harga < 100000) ||
+        (produkFilter === "mid" && item.harga >= 100000 && item.harga <= 500000) ||
+        (produkFilter === "high" && item.harga > 500000);
+      return matchesSearch && matchesFilter;
+    });
+  }, [produk, produkFilter, produkTable.query]);
+
   const handleUserSubmit = async (event: React.FormEvent) => {
     event.preventDefault();
     setError(null);

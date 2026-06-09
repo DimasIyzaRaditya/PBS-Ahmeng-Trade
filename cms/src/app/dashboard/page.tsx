@@ -591,10 +591,7 @@ export default function AdminPanel() {
       password: userForm.password.trim(),
     };
 
-    if (!payload.name || !payload.username) {
-      setError("Nama dan username wajib diisi");
-      return;
-    }
+    if (!payload.name) errors.name = "Wajib diisi";
 
     try {
       const res = await fetch(

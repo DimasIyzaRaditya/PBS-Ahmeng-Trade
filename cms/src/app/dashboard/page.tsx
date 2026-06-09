@@ -122,6 +122,30 @@ function FormField({
   );
 }
 
+function ToastStack({ toasts, onDismiss }: { toasts: Toast[]; onDismiss: (id: number) => void }) {
+  if (toasts.length === 0) return null;
+
+  return (
+    <div className="fixed right-4 top-4 z-50 grid w-[min(360px,calc(100vw-2rem))] gap-3">
+      {toasts.map((toast) => (
+        <button
+          key={toast.id}
+          onClick={() => onDismiss(toast.id)}
+          className={`rounded-md border px-4 py-3 text-left text-sm shadow-xl backdrop-blur ${
+            toast.type === "success"
+              ? "border-emerald-700 bg-emerald-950/90 text-emerald-100"
+              : toast.type === "error"
+              ? "border-red-800 bg-red-950/90 text-red-100"
+              : "border-neutral-700 bg-neutral-900/90 text-neutral-100"
+          }`}
+        >
+          {toast.message}
+        </button>
+      ))}
+    </div>
+  );
+}
+
 export default function AdminPanel() {
   const router = useRouter();
   const [activeTab, setActiveTab] = useState<TabKey>("users");

@@ -269,7 +269,7 @@ export default function AdminPanel() {
     setToasts((prev) => [...prev, { id, message, type }].slice(-4));
     window.setTimeout(() => setToasts((prev) => prev.filter((toast) => toast.id !== id)), 3500);
   }, []);
-  
+
   useEffect(() => {
     const token = localStorage.getItem("cms_token");
     const userRaw = localStorage.getItem("cms_user");
@@ -293,13 +293,14 @@ export default function AdminPanel() {
     void loadAll(token);
   }, [router]);
 
-  const handleLogout = () => {
+  const handleLogout = useCallback(() => {
     localStorage.removeItem("cms_token");
     localStorage.removeItem("cms_user");
+    // Cookie cleanup and navigation are intentional browser side effects.
     document.cookie = "cms_token=; Path=/; Max-Age=0";
     document.cookie = "cms_role=; Path=/; Max-Age=0";
-    window.location.href = "/login";
-  };
+    router.replace("/login");
+  }, [router]);
 
   const loadAll = async (token: string) => {
     setLoading(true);

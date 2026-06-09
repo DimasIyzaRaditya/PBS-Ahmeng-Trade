@@ -300,3 +300,8 @@
 .inputError {
   border-color: #b91c1c;
 }
+
+.formGrid {
+  display: grid;
+  gap: 1rem;
+}

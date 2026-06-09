@@ -661,11 +661,17 @@ export default function AdminPanel() {
 
     setSaving(true);
     try {
-      const res = await fetch(produkForm.id ? `${API_PRODUK}/${produkForm.id}` : API_PRODUK, {
-        method: produkForm.id ? "PATCH" : "POST",
-        headers: buildAuthHeaders(authToken, true),
-        body: JSON.stringify({ nama: produkForm.nama.trim(), harga: hargaValue }),
-      });
+      const res = await fetch(
+        produkForm.id ? `${API_PRODUK}/${produkForm.id}` : API_PRODUK,
+        {
+          method: produkForm.id ? "PATCH" : "POST",
+          headers: buildAuthHeaders(authToken, true),
+          body: JSON.stringify({
+            nama: produkForm.nama.trim(),
+            harga: hargaValue,
+          }),
+        },
+      );
 
       if (res.status === 401) {
         handleLogout();
@@ -679,7 +685,12 @@ export default function AdminPanel() {
 
       setProdukForm({ id: 0, nama: "", harga: "" });
       setProdukErrors({});
-      addToast(produkForm.id ? "Produk berhasil diperbarui" : "Produk berhasil ditambahkan", "success");
+      addToast(
+        produkForm.id
+          ? "Produk berhasil diperbarui"
+          : "Produk berhasil ditambahkan",
+        "success",
+      );
       await loadAll(authToken, false);
     } catch (err) {
       const message = err instanceof Error ? err.message : "Terjadi kesalahan";
@@ -693,7 +704,9 @@ export default function AdminPanel() {
   const handleTransaksiSubmit = async (event: React.FormEvent) => {
     event.preventDefault();
     setError(null);
-    const errors: ValidationErrors<"produkId" | "namaPembeli" | "emailPembeli" | "totalHarga"> = {};
+    const errors: ValidationErrors<
+      "produkId" | "namaPembeli" | "emailPembeli" | "totalHarga"
+    > = {};
 
     if (!authToken) {
       addToast("Sesi tidak valid", "error");
@@ -702,6 +715,18 @@ export default function AdminPanel() {
 
     const produkIdValue = Number(transaksiForm.produkId);
     const totalHargaValue = Number(transaksiForm.totalHarga);
+
+    if (!produkIdValue) errors.produkId = "Pilih produk";
+    if (!transaksiForm.namaPembeli.trim()) errors.namaPembeli = "Wajib diisi";
+    if (!isValidEmail(transaksiForm.emailPembeli.trim()))
+      errors.emailPembeli = "Email tidak valid";
+    if (
+      !transaksiForm.totalHarga ||
+      Number.isNaN(totalHargaValue) ||
+      totalHargaValue < 0
+    ) {
+      errors.totalHarga = "Masukkan angka valid";
+    }
 
     const hargaValue = Number(produkForm.harga);
     if (!produkForm.nama.trim() || Number.isNaN(hargaValue)) {

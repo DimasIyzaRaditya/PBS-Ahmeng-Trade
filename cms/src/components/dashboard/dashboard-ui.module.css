@@ -86,3 +86,8 @@
   padding: 0.5rem 1rem;
   font-size: 0.875rem;
 }
+
+.button:hover,
+.paginationButton:hover:not(:disabled) {
+  border-color: #737373;
+}

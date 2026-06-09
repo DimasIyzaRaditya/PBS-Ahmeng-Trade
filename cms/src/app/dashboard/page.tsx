@@ -752,6 +752,11 @@ export default function AdminPanel() {
         return;
       }
 
+      if (!res.ok) {
+        const errJson = await res.json();
+        throw new Error(errJson.message || "Gagal menyimpan transaksi");
+      }
+
     const hargaValue = Number(produkForm.harga);
     if (!produkForm.nama.trim() || Number.isNaN(hargaValue)) {
       setError("Nama dan harga wajib diisi");

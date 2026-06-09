@@ -623,6 +623,14 @@ export default function AdminPanel() {
       setUserErrors({});
       addToast(userForm.id ? "User berhasil diperbarui" : "User berhasil ditambahkan", "success");
       await loadAll(authToken, false);
+      } catch (err) {
+      const message = err instanceof Error ? err.message : "Terjadi kesalahan";
+      setError(message);
+      addToast(message, "error");
+    } finally {
+      setSaving(false);
+    }
+  };
 
     try {
       const res = await fetch(

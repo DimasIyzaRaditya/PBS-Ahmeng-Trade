@@ -349,6 +349,19 @@ export default function AdminPanel() {
       return;
     }
 
+        try {
+      const user = JSON.parse(userRaw) as { username?: string };
+      if (!user.username || user.username.toLowerCase() !== "admin") {
+        setLoading(false);
+        setError("Akun bukan admin. Silakan login ulang.");
+        return;
+      }
+    } catch {
+      setLoading(false);
+      setError("Sesi tidak valid. Silakan login ulang.");
+      return;
+    }
+
   const handleUserSubmit = async (event: React.FormEvent) => {
     event.preventDefault();
     setError(null);

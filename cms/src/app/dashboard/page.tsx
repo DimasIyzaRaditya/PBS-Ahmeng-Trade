@@ -792,6 +792,8 @@ export default function AdminPanel() {
         ? `${API_PRODUK}/${id}`
         : `${API_TRANSAKSI}/${id}`;
 
+    setSaving(true);
+
     const payload = {
       nama: produkForm.nama.trim(),
       harga: hargaValue,

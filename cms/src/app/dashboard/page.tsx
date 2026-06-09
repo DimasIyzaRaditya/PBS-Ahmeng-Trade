@@ -442,6 +442,11 @@ export default function AdminPanel() {
     [produk],
   );
 
+    const dashboardStats = useMemo(() => {
+    const revenue = transaksi.reduce((sum, item) => sum + (item.totalHarga || 0), 0);
+    const dailyMap = new Map<string, number>();
+    const topMap = new Map<number, { nama: string; count: number; revenue: number }>();
+
   const handleUserSubmit = async (event: React.FormEvent) => {
     event.preventDefault();
     setError(null);

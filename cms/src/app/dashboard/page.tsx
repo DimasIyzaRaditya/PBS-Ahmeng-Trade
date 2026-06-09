@@ -734,6 +734,19 @@ export default function AdminPanel() {
       return;
     }
 
+    setSaving(true);
+    try {
+      const res = await fetch(transaksiForm.id ? `${API_TRANSAKSI}/${transaksiForm.id}` : API_TRANSAKSI, {
+        method: transaksiForm.id ? "PATCH" : "POST",
+        headers: buildAuthHeaders(authToken, true),
+        body: JSON.stringify({
+          produkId: produkIdValue,
+          namaPembeli: transaksiForm.namaPembeli.trim(),
+          emailPembeli: transaksiForm.emailPembeli.trim(),
+          totalHarga: totalHargaValue,
+        }),
+      });
+
     const hargaValue = Number(produkForm.harga);
     if (!produkForm.nama.trim() || Number.isNaN(hargaValue)) {
       setError("Nama dan harga wajib diisi");

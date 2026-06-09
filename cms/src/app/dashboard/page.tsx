@@ -447,6 +447,13 @@ export default function AdminPanel() {
     const dailyMap = new Map<string, number>();
     const topMap = new Map<number, { nama: string; count: number; revenue: number }>();
 
+    transaksi.forEach((item) => {
+      const date = parseDate(item.createdAt);
+      const key = date
+        ? date.toLocaleDateString("id-ID", { day: "2-digit", month: "short" })
+        : "Tanpa tanggal";
+      dailyMap.set(key, (dailyMap.get(key) || 0) + item.totalHarga);
+
   const handleUserSubmit = async (event: React.FormEvent) => {
     event.preventDefault();
     setError(null);

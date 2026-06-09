@@ -593,21 +593,25 @@ export default function AdminPanel() {
 
     if (!payload.name) errors.name = "Wajib diisi";
     if (!payload.username) errors.username = "Wajib diisi";
-    if (!userForm.id && payload.password.length < 6) errors.password = "Minimal 6 karakter";
+    if (!userForm.id && payload.password.length < 6)
+      errors.password = "Minimal 6 karakter";
 
     setUserErrors(errors);
     if (Object.keys(errors).length > 0) {
       addToast("Periksa kembali form user", "error");
       return;
     }
-    
+
     setSaving(true);
     try {
-      const res = await fetch(userForm.id ? `${API_USER}/${userForm.id}` : API_USER, {
-        method: userForm.id ? "PATCH" : "POST",
-        headers: buildAuthHeaders(authToken, true),
-        body: JSON.stringify(payload),
-      });
+      const res = await fetch(
+        userForm.id ? `${API_USER}/${userForm.id}` : API_USER,
+        {
+          method: userForm.id ? "PATCH" : "POST",
+          headers: buildAuthHeaders(authToken, true),
+          body: JSON.stringify(payload),
+        },
+      );
 
       if (res.status === 401) {
         handleLogout();
@@ -621,9 +625,12 @@ export default function AdminPanel() {
 
       setUserForm({ id: 0, name: "", username: "", password: "" });
       setUserErrors({});
-      addToast(userForm.id ? "User berhasil diperbarui" : "User berhasil ditambahkan", "success");
+      addToast(
+        userForm.id ? "User berhasil diperbarui" : "User berhasil ditambahkan",
+        "success",
+      );
       await loadAll(authToken, false);
-      } catch (err) {
+    } catch (err) {
       const message = err instanceof Error ? err.message : "Terjadi kesalahan";
       setError(message);
       addToast(message, "error");
@@ -636,6 +643,11 @@ export default function AdminPanel() {
     event.preventDefault();
     setError(null);
     const errors: ValidationErrors<"nama" | "harga"> = {};
+    if (!authToken) {
+      addToast("Sesi tidak valid", "error");
+      return;
+    }
+
     try {
       const res = await fetch(
         userForm.id ? `${API_USER}/${userForm.id}` : API_USER,

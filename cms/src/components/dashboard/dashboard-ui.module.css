@@ -254,3 +254,7 @@
   color: #fafafa;
   font-weight: 600;
 }
+
+.chartTitle {
+  font-size: 1.125rem;
+}

@@ -102,6 +102,26 @@ function TableSkeleton({ columns = 4 }: { columns?: number }) {
   );
 }
 
+function FormField({
+  label,
+  error,
+  children,
+}: {
+  label: string;
+  error?: string;
+  children: React.ReactNode;
+}) {
+  return (
+    <label className="text-sm text-neutral-300">
+      <span className="flex items-center justify-between gap-3">
+        {label}
+        {error && <span className="text-xs text-red-300">{error}</span>}
+      </span>
+      {children}
+    </label>
+  );
+}
+
 export default function AdminPanel() {
   const router = useRouter();
   const [activeTab, setActiveTab] = useState<TabKey>("users");

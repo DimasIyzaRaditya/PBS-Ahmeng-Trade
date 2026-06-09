@@ -296,3 +296,7 @@
 .fieldControl {
   margin-top: 0.5rem;
 }
+
+.inputError {
+  border-color: #b91c1c;
+}

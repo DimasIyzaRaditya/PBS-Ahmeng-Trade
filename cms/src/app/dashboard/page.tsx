@@ -555,6 +555,8 @@ export default function AdminPanel() {
   const pagedProduk = paginate(filteredProduk, produkTable.page, produkTable.pageSize);
   const pagedTransaksi = paginate(filteredTransaksi, transaksiTable.page, transaksiTable.pageSize);
   const maxDailySales = Math.max(...dashboardStats.dailySales.map((item) => item.total), 0);
+  const maxTopProductRevenue = Math.max(...dashboardStats.topProducts.map((item) => item.revenue), 0);
+  
   const handleUserSubmit = async (event: React.FormEvent) => {
     event.preventDefault();
     setError(null);

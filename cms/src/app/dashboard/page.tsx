@@ -696,7 +696,7 @@ export default function AdminPanel() {
     const errors: ValidationErrors<"produkId" | "namaPembeli" | "emailPembeli" | "totalHarga"> = {};
 
     if (!authToken) {
-      setError("Sesi tidak valid");
+      addToast("Sesi tidak valid", "error");
       return;
     }
 

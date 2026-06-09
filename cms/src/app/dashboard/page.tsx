@@ -436,6 +436,12 @@ export default function AdminPanel() {
     void loadAll(token, false);
   }, [loadAll]);
 
+  const productName = useCallback(
+    (produkId: number) =>
+      produk.find((item) => item.id === produkId)?.nama || `#${produkId}`,
+    [produk],
+  );
+
   const handleUserSubmit = async (event: React.FormEvent) => {
     event.preventDefault();
     setError(null);

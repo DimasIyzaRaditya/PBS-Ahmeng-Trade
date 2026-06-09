@@ -36,6 +36,12 @@ interface Toast {
   message: string;
 }
 
+interface PaginationState {
+  query: string;
+  page: number;
+  pageSize: number;
+}
+
 const API_BASE ="http://localhost:3000";
 const API_USER = `${API_BASE}/user`;
 const API_PRODUK = `${API_BASE}/produk`;

@@ -262,3 +262,9 @@
 .panelTitle {
   font-size: 1.25rem;
 }
+
+.toolbar {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}

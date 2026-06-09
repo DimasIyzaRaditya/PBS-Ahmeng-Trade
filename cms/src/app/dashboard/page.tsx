@@ -701,6 +701,7 @@ export default function AdminPanel() {
     }
 
     const produkIdValue = Number(transaksiForm.produkId);
+    const totalHargaValue = Number(transaksiForm.totalHarga);
 
     const hargaValue = Number(produkForm.harga);
     if (!produkForm.nama.trim() || Number.isNaN(hargaValue)) {

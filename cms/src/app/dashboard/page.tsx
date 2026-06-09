@@ -600,6 +600,14 @@ export default function AdminPanel() {
       addToast("Periksa kembali form user", "error");
       return;
     }
+    
+    setSaving(true);
+    try {
+      const res = await fetch(userForm.id ? `${API_USER}/${userForm.id}` : API_USER, {
+        method: userForm.id ? "PATCH" : "POST",
+        headers: buildAuthHeaders(authToken, true),
+        body: JSON.stringify(payload),
+      });
 
     try {
       const res = await fetch(

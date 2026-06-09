@@ -650,7 +650,8 @@ export default function AdminPanel() {
 
     const hargaValue = Number(produkForm.harga);
     if (!produkForm.nama.trim()) errors.nama = "Wajib diisi";
-    if (!produkForm.harga || Number.isNaN(hargaValue) || hargaValue < 0) errors.harga = "Masukkan angka valid";
+    if (!produkForm.harga || Number.isNaN(hargaValue) || hargaValue < 0)
+      errors.harga = "Masukkan angka valid";
 
     setProdukErrors(errors);
     if (Object.keys(errors).length > 0) {
@@ -661,13 +662,21 @@ export default function AdminPanel() {
     setSaving(true);
     try {
       const res = await fetch(
-        userForm.id ? `${API_USER}/${userForm.id}` : API_USER,
+        produkForm.id ? `${API_PRODUK}/${produkForm.id}` : API_PRODUK,
         {
-          method: userForm.id ? "PATCH" : "POST",
+          method: produkForm.id ? "PATCH" : "POST",
           headers: buildAuthHeaders(authToken, true),
-          body: JSON.stringify(payload),
+          body: JSON.stringify({
+            nama: produkForm.nama.trim(),
+            harga: hargaValue,
+          }),
         },
       );
+
+      if (res.status === 401) {
+        handleLogout();
+        return;
+      }
 
       if (res.status === 401) {
         handleLogout();

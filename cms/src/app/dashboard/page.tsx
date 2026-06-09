@@ -302,7 +302,7 @@ export default function AdminPanel() {
     router.replace("/login");
   }, [router]);
 
-  const loadAll = async (token: string) => {
+  const loadAll = useCallback(async (token: string, showToast = true) => {
     setLoading(true);
     setError(null);
     try {

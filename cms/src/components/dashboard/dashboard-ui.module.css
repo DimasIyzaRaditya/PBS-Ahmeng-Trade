@@ -219,3 +219,7 @@
 .statsGrid {
   gap: 1rem;
 }
+
+.statCard {
+  padding: 1.25rem;
+}

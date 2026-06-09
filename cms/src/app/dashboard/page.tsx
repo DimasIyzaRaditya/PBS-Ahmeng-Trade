@@ -7,6 +7,7 @@ import { useRouter } from "next/navigation";
 type TabKey = "dashboard" | "users" | "produk" | "transaksi";
 type ToastType = "success" | "error" | "info";
 type ValidationErrors<T extends string> = Partial<Record<T, string>>;
+
 interface User {
   id: number;
   name: string;
@@ -27,6 +28,12 @@ interface Transaksi {
   emailPembeli: string;
   totalHarga: number;
   createdAt?: string;
+}
+
+interface Toast {
+  id: number;
+  type: ToastType;
+  message: string;
 }
 
 const API_BASE ="http://localhost:3000";

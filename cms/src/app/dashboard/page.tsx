@@ -60,6 +60,12 @@ const formatCurrency = (value: number) =>
     maximumFractionDigits: 0,
   }).format(value || 0);
 
+  const parseDate = (date?: string) => {
+  if (!date) return null;
+  const parsed = new Date(date);
+  return Number.isNaN(parsed.getTime()) ? null : parsed;
+};
+
 export default function AdminPanel() {
   const router = useRouter();
   const [activeTab, setActiveTab] = useState<TabKey>("users");

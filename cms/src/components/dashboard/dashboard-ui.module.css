@@ -199,3 +199,12 @@
   flex-direction: column;
   gap: 1.5rem;
 }
+
+.alert {
+  border: 1px solid #991b1b;
+  border-radius: 0.375rem;
+  background: rgb(69 10 10 / 0.6);
+  color: #fca5a5;
+  padding: 0.75rem 1rem;
+  font-size: 0.875rem;
+}

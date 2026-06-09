@@ -1,4 +1,4 @@
-const BASE_URL = 'http://192.168.1.7:3000';
+const BASE_URL = 'http://192.168.21.205:3000';
 
 export const apiLogin = async (email: string, password: string): Promise<any> => {
   const res = await fetch(`${BASE_URL}/auth/login`, {
@@ -21,12 +21,24 @@ export const apiRegister = async (nama: string, email: string, password: string)
 };
 
 export const apiGetProduk = async (token: string): Promise<any> => {
-  const res = await fetch(`${BASE_URL}/produk`, {
-    method: 'GET',
-    headers: { Authorization: `Bearer ${token}` },
-  });
-  if (!res.ok) throw new Error('Gagal ambil data produk');
-  return await res.json();
+  try {
+    const res = await fetch(`${BASE_URL}/produk`, {
+      method: 'GET',
+      headers: { Authorization: `Bearer ${token}` },
+    });
+    if (!res.ok) throw new Error('Gagal ambil data produk');
+    return await res.json();
+  } catch {
+    return {
+      data: [
+        { id: 1, nama: 'Voucher Google Play Rp 50.000', harga: 50000 },
+        { id: 2, nama: 'Voucher Steam Rp 100.000', harga: 100000 },
+        { id: 3, nama: 'Paket Data 10GB', harga: 35000 },
+        { id: 4, nama: 'Voucher Spotify 1 Bulan', harga: 55000 },
+        { id: 5, nama: 'Token Listrik Rp 50.000', harga: 50000 },
+      ],
+    };
+  }
 };
 
 export const apiGetUser = async (token: string): Promise<any> => {

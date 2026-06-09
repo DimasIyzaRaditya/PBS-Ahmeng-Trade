@@ -614,6 +614,11 @@ export default function AdminPanel() {
         return;
       }
 
+      if (!res.ok) {
+        const errJson = await res.json();
+        throw new Error(errJson.message || "Gagal menyimpan user");
+      }
+
     try {
       const res = await fetch(
         userForm.id ? `${API_USER}/${userForm.id}` : API_USER,

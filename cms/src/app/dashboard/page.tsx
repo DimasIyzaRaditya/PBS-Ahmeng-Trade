@@ -770,6 +770,10 @@ export default function AdminPanel() {
     }
   };
 
+    const handleDelete = async (resource: "user" | "produk" | "transaksi", id: number) => {
+    if (!window.confirm("Yakin ingin menghapus data ini?")) return;
+    setError(null);
+
     const hargaValue = Number(produkForm.harga);
     if (!produkForm.nama.trim() || Number.isNaN(hargaValue)) {
       setError("Nama dan harga wajib diisi");

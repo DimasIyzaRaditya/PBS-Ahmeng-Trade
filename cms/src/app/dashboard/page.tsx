@@ -682,7 +682,11 @@ export default function AdminPanel() {
       addToast(produkForm.id ? "Produk berhasil diperbarui" : "Produk berhasil ditambahkan", "success");
       await loadAll(authToken, false);
     } catch (err) {
-      setError(err instanceof Error ? err.message : "Terjadi kesalahan");
+      const message = err instanceof Error ? err.message : "Terjadi kesalahan";
+      setError(message);
+      addToast(message, "error");
+    } finally {
+      setSaving(false);
     }
   };
 

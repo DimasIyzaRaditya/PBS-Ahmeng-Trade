@@ -199,6 +199,22 @@ function PaginationControls({
   );
 }
 
+function ChartBar({ label, value, max, caption }: { label: string; value: number; max: number; caption: string }) {
+  const height = max > 0 ? Math.max(8, Math.round((value / max) * 120)) : 8;
+
+  return (
+    <div className="flex min-w-16 flex-1 flex-col items-center justify-end gap-2">
+      <div className="flex h-32 w-full items-end rounded-md bg-neutral-950 px-2 py-2">
+        <div className="w-full rounded bg-emerald-400" style={{ height }} />
+      </div>
+      <div className="text-center">
+        <p className="text-xs font-medium text-neutral-300">{label}</p>
+        <p className="text-[11px] text-neutral-500">{caption}</p>
+      </div>
+    </div>
+  );
+}
+
 export default function AdminPanel() {
   const router = useRouter();
   const [activeTab, setActiveTab] = useState<TabKey>("users");

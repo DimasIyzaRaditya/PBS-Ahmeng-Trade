@@ -762,6 +762,13 @@ export default function AdminPanel() {
       addToast(transaksiForm.id ? "Transaksi berhasil diperbarui" : "Transaksi berhasil ditambahkan", "success");
       await loadAll(authToken, false);
     } catch (err) {
+      const message = err instanceof Error ? err.message : "Terjadi kesalahan";
+      setError(message);
+      addToast(message, "error");
+    } finally {
+      setSaving(false);
+    }
+  };
 
     const hargaValue = Number(produkForm.harga);
     if (!produkForm.nama.trim() || Number.isNaN(hargaValue)) {

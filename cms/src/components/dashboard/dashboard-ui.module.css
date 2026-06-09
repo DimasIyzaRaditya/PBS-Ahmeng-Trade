@@ -142,5 +142,6 @@
 
 .sidebar {
   display: none;
+  flex-direction: column;
 
 }

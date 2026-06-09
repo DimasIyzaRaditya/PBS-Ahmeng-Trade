@@ -618,8 +618,9 @@ export default function AdminPanel() {
         const errJson = await res.json();
         throw new Error(errJson.message || "Gagal menyimpan user");
       }
-      
+
       setUserForm({ id: 0, name: "", username: "", password: "" });
+      setUserErrors({});
 
     try {
       const res = await fetch(

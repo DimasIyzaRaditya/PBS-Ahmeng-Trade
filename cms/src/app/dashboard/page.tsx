@@ -632,6 +632,10 @@ export default function AdminPanel() {
     }
   };
 
+  const handleProdukSubmit = async (event: React.FormEvent) => {
+    event.preventDefault();
+    setError(null);
+    const errors: ValidationErrors<"nama" | "harga"> = {};
     try {
       const res = await fetch(
         userForm.id ? `${API_USER}/${userForm.id}` : API_USER,

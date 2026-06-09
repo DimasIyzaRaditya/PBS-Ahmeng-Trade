@@ -223,6 +223,7 @@ export default function AdminPanel() {
   const [error, setError] = useState<string | null>(null);
   const [authToken, setAuthToken] = useState<string | null>(null);
   const [toasts, setToasts] = useState<Toast[]>([]);
+  const toastIdRef = useRef(0);
 
   const [users, setUsers] = useState<User[]>([]);
   const [produk, setProduk] = useState<Produk[]>([]);

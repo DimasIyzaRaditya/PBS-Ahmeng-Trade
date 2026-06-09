@@ -779,6 +779,11 @@ export default function AdminPanel() {
       setError("Nama dan harga wajib diisi");
       return;
     }
+    
+    if (!authToken) {
+      addToast("Sesi tidak valid", "error");
+      return;
+    }
 
     const payload = {
       nama: produkForm.nama.trim(),

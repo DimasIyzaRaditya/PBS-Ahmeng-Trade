@@ -61,3 +61,41 @@ export default function TransaksiScreen(): React.JSX.Element {
         getNamaProduk(t.produkId).toLowerCase().includes(searchQuery.toLowerCase())
       )
     : transaksi;
+
+  return (
+    <ScrollView style={commonStyles.container}>
+      {/* Header */}
+      <View style={headerStyles.containerSecondary}>
+        <View style={commonStyles.flexRowBetween}>
+          <View style={headerStyles.logoContainer}>
+            <Image
+              source={require('../../assets/images/logo.png')}
+              style={headerStyles.logo}
+              resizeMode="contain"
+            />
+            <Text style={headerStyles.brandText}>Ahmeng Trade</Text>
+          </View>
+          <Text style={{ color: colors.text.secondary, fontSize: typography.fontSize.sm }}>
+            Halo, {user?.name ?? 'User'}!
+          </Text>
+        </View>
+      </View>
+
+      {/* Search */}
+      <View style={[commonStyles.containerPadding, { marginTop: spacing.lg }]}>
+        <View style={inputStyles.searchContainer}>
+          <MaterialCommunityIcons name="magnify" size={20} color={colors.text.secondary} />
+          <TextInput
+            placeholder="Cari transaksi..."
+            placeholderTextColor={colors.text.tertiary}
+            value={searchQuery}
+            onChangeText={setSearchQuery}
+            style={inputStyles.searchInput}
+          />
+          {searchQuery.length > 0 && (
+            <Pressable onPress={() => setSearchQuery('')}>
+              <MaterialCommunityIcons name="close-circle" size={20} color={colors.text.secondary} />
+            </Pressable>
+          )}
+        </View>
+      </View>

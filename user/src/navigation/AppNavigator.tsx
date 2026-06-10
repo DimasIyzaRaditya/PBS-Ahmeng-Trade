@@ -1,7 +1,6 @@
 import React from 'react';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
-import DashboardScreen from '../screens/DashboardScreen';
 import HomeScreen from '../screens/HomeScreen';
 import ProdukScreen from '../screens/ProdukScreen';
 import TransaksiScreen from '../screens/TransaksiScreen';
@@ -9,7 +8,6 @@ import ProfileScreen from '../screens/ProfileScreen';
 import { colors, typography } from '../styles';
 
 type AppTabParamList = {
-  Dashboard: undefined;
   Home: undefined;
   Produk: undefined;
   Transaksi: undefined;
@@ -36,16 +34,6 @@ export default function AppNavigator() {
         },
       }}
     >
-      <Tab.Screen
-        name="Dashboard"
-        component={DashboardScreen}
-        options={{
-          tabBarLabel: 'Dashboard',
-          tabBarIcon: ({ color, size }) => (
-            <MaterialCommunityIcons name="view-dashboard-outline" size={size} color={color} />
-          ),
-        }}
-      />
       <Tab.Screen
         name="Home"
         component={HomeScreen}

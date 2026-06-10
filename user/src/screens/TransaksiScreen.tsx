@@ -22,3 +22,42 @@ interface Transaksi {
   totalHarga: number;
   createdAt?: string;
 }
+
+export default function TransaksiScreen(): React.JSX.Element {
+  const { token, user } = useAuth();
+  const [transaksi, setTransaksi] = useState<Transaksi[]>([]);
+  const [produk, setProduk] = useState<Produk[]>([]);
+  const [loading, setLoading] = useState<boolean>(true);
+  const [error, setError] = useState<string>('');
+  const [searchQuery, setSearchQuery] = useState<string>('');
+
+  useEffect(() => {
+    if (!token) return;
+    const fetchData = async () => {
+      setLoading(true);
+      setError('');
+      try {
+        const [transaksiRes, produkRes] = await Promise.all([
+          apiGetTransaksi(token),
+          apiGetProduk(token),
+        ]);
+        setTransaksi(Array.isArray(transaksiRes.data) ? transaksiRes.data : []);
+        setProduk(Array.isArray(produkRes.data) ? produkRes.data : []);
+      } catch (e) {
+        setError('Gagal memuat transaksi');
+      } finally {
+        setLoading(false);
+      }
+    };
+    fetchData();
+  }, [token]);
+
+  const getNamaProduk = (produkId: number) =>
+    produk.find(p => p.id === produkId)?.nama ?? `#${produkId}`;
+
+  const filteredTransaksi = searchQuery.trim()
+    ? transaksi.filter(t =>
+        t.namaPembeli.toLowerCase().includes(searchQuery.toLowerCase()) ||
+        getNamaProduk(t.produkId).toLowerCase().includes(searchQuery.toLowerCase())
+      )
+    : transaksi;

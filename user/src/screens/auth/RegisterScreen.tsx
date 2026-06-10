@@ -32,12 +32,17 @@ export default function RegisterScreen({ navigation }: Props) {
       setError('Semua field harus diisi');
       return;
     }
+    if (password.length < 6) {
+      setError('Password minimal 6 karakter');
+      return;
+    }
     setError('');
     setLoading(true);
     try {
       await register(nama, username, password);
-    } catch (e) {
-      setError('Registrasi gagal, periksa kembali data kamu');
+    } catch (e: any) {
+      console.log('Register error:', e?.message || e);
+      setError(e?.message || 'Registrasi gagal, periksa kembali data kamu');
     } finally {
       setLoading(false);
     }
@@ -95,7 +100,7 @@ export default function RegisterScreen({ navigation }: Props) {
           <View style={inputStyles.wrapper}>
             <MaterialCommunityIcons name="lock-outline" size={18} color={colors.text.secondary} />
             <TextInput
-              placeholder="Masukkan password"
+              placeholder="Masukkan password (min. 6 karakter)"
               placeholderTextColor={colors.text.muted}
               secureTextEntry
               value={password}

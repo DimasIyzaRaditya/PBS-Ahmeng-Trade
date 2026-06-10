@@ -12,8 +12,8 @@ interface AuthContextType {
   user: User | null;
   token: string | null;
   loading: boolean;
-  login: (email: string, password: string) => Promise<void>;
-  register: (nama: string, email: string, password: string) => Promise<void>;
+  login: (username: string, password: string) => Promise<void>;
+  register: (nama: string, username: string, password: string) => Promise<void>;
   logout: () => Promise<void>;
 }
 
@@ -48,17 +48,20 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
     loadSession();
   }, []);
 
-  const login = async (email: string, password: string): Promise<void> => {
-    const res = await apiLogin(email, password);
-    setUser(res.data);
-    setToken(res.data.access_token);
-    await AsyncStorage.setItem('token', res.data.access_token);
-    await AsyncStorage.setItem('user', JSON.stringify(res.data));
+  const login = async (username: string, password: string): Promise<void> => {
+    const res = await apiLogin(username, password);
+    const userData = res.data ?? res;
+    const accessToken = userData.access_token ?? userData.token;
+    if (!accessToken) throw new Error('Token tidak ditemukan dari server');
+    setUser(userData);
+    setToken(accessToken);
+    await AsyncStorage.setItem('token', accessToken);
+    await AsyncStorage.setItem('user', JSON.stringify(userData));
   };
 
-  const register = async (nama: string, email: string, password: string): Promise<void> => {
-    await apiRegister(nama, email, password);
-    await login(email, password);
+  const register = async (nama: string, username: string, password: string): Promise<void> => {
+    await apiRegister(nama, username, password);
+    await login(username, password);
   };
 
   const logout = async (): Promise<void> => {

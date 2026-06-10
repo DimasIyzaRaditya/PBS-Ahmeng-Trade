@@ -1,22 +1,28 @@
-const BASE_URL = 'http://192.168.21.205:3000';
+const BASE_URL = 'http://192.168.14.32:3000';
 
-export const apiLogin = async (email: string, password: string): Promise<any> => {
+export const apiLogin = async (username: string, password: string): Promise<any> => {
   const res = await fetch(`${BASE_URL}/auth/login`, {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify({ username: email, password }),
+    body: JSON.stringify({ username, password }),
   });
-  if (!res.ok) throw new Error('Login gagal');
+  if (!res.ok) {
+    const errBody = await res.json().catch(() => ({}));
+    throw new Error(errBody?.message || 'Login gagal');
+  }
   return await res.json();
 };
 
-export const apiRegister = async (nama: string, email: string, password: string): Promise<any> => {
+export const apiRegister = async (nama: string, username: string, password: string): Promise<any> => {
   const res = await fetch(`${BASE_URL}/user`, {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify({ name: nama, username: email, password }),
+    body: JSON.stringify({ name: nama, username, password }),
   });
-  if (!res.ok) throw new Error('Registrasi gagal');
+  if (!res.ok) {
+    const errBody = await res.json().catch(() => ({}));
+    throw new Error(errBody?.message || 'Registrasi gagal');
+  }
   return await res.json();
 };
 
@@ -92,4 +98,14 @@ export const apiUpdateProduk = async (token: string, id: number, data: object): 
   });
   if (!res.ok) throw new Error('Gagal update produk');
   return await res.json();
+};
+
+export const apiHealth = async (): Promise<any> => {
+  const res = await fetch(`${BASE_URL}/`);
+  try {
+    const json = await res.json();
+    return { ok: res.ok, status: res.status, body: json };
+  } catch (_) {
+    return { ok: res.ok, status: res.status, body: null };
+  }
 };

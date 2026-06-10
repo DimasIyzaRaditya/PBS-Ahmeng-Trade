@@ -26,3 +26,50 @@ interface User {
   name: string;
   username: string;
 }
+
+export default function DashboardScreen(): React.JSX.Element {
+  const { token, user } = useAuth();
+  const [produk, setProduk] = useState<Produk[]>([]);
+  const [transaksi, setTransaksi] = useState<Transaksi[]>([]);
+  const [users, setUsers] = useState<User[]>([]);
+  const [loading, setLoading] = useState<boolean>(true);
+  const [error, setError] = useState<string>('');
+
+  useEffect(() => {
+    if (!token) return;
+    const fetchData = async () => {
+      setLoading(true);
+      setError('');
+      try {
+        const [produkRes, transaksiRes, userRes] = await Promise.all([
+          apiGetProduk(token),
+          apiGetTransaksi(token),
+          apiGetUser(token),
+        ]);
+        setProduk(Array.isArray(produkRes.data) ? produkRes.data : []);
+        setTransaksi(Array.isArray(transaksiRes.data) ? transaksiRes.data : []);
+        setUsers(Array.isArray(userRes.data) ? userRes.data : []);
+      } catch (e) {
+        setError('Gagal memuat data dashboard');
+      } finally {
+        setLoading(false);
+      }
+    };
+    fetchData();
+  }, [token]);
+
+  const totalRevenue = transaksi.reduce((sum, t) => sum + (t.totalHarga || 0), 0);
+
+  const getNamaProduk = (produkId: number) =>
+    produk.find(p => p.id === produkId)?.nama ?? `#${produkId}`;
+
+  const topProduk = Object.values(
+    transaksi.reduce((acc, t) => {
+      if (!acc[t.produkId]) {
+        acc[t.produkId] = { nama: getNamaProduk(t.produkId), count: 0, revenue: 0 };
+      }
+      acc[t.produkId].count += 1;
+      acc[t.produkId].revenue += t.totalHarga;
+      return acc;
+    }, {} as Record<number, { nama: string; count: number; revenue: number }>)
+  ).sort((a, b) => b.revenue - a.revenue).slice(0, 5);

@@ -52,14 +52,16 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
     const res = await apiLogin(username, password);
     const userData = res.data ?? res;
     const accessToken = userData.access_token ?? userData.token;
-    const userInfo = userData.user ?? {
-      id: userData.id,
-      name: userData.name,
-      username: userData.username,
+    const userInfo: User = {
+      id: userData.user?.id ?? userData.id,
+      name: userData.user?.name ?? userData.name,
+      username: userData.user?.username ?? userData.username,
     };
 
     if (!accessToken) throw new Error('Token tidak ditemukan dari server');
-    if (!userInfo.name && !userInfo.username) throw new Error('Data user tidak ditemukan dari server');
+
+    await AsyncStorage.removeItem('token');
+    await AsyncStorage.removeItem('user');
 
     setUser(userInfo);
     setToken(accessToken);

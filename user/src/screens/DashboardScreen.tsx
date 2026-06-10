@@ -134,3 +134,52 @@ export default function DashboardScreen(): React.JSX.Element {
               </View>
             </View>
           </View>
+
+          {/* Top Produk */}
+          <View style={[sectionStyles.container, { marginTop: spacing['2xl'] }]}>
+            <Text style={sectionStyles.title}>Top Produk Terlaris</Text>
+            <Text style={sectionStyles.subtitle}>Berdasarkan total revenue</Text>
+
+            {topProduk.length > 0 ? (
+              topProduk.map((item, index) => (
+                <View
+                  key={index}
+                  style={{
+                    flexDirection: 'row',
+                    justifyContent: 'space-between',
+                    alignItems: 'center',
+                    paddingVertical: spacing.base,
+                    borderBottomWidth: index === topProduk.length - 1 ? 0 : 1,
+                    borderBottomColor: colors.border.primary,
+                  }}
+                >
+                  <View style={{ flexDirection: 'row', alignItems: 'center', flex: 1 }}>
+                    <Text style={{ color: colors.text.secondary, fontSize: typography.fontSize.sm, width: 24 }}>
+                      {index + 1}.
+                    </Text>
+                    <View style={{ flex: 1 }}>
+                      <Text style={{ color: colors.text.primary, fontSize: typography.fontSize.base, fontWeight: typography.fontWeight.semibold }}>
+                        {item.nama}
+                      </Text>
+                      <Text style={{ color: colors.text.secondary, fontSize: typography.fontSize.sm }}>
+                        {item.count} transaksi
+                      </Text>
+                    </View>
+                  </View>
+                  <Text style={{ color: colors.text.primary, fontSize: typography.fontSize.sm, fontWeight: typography.fontWeight.semibold }}>
+                    {formatRupiah(item.revenue)}
+                  </Text>
+                </View>
+              ))
+            ) : (
+              <View style={{ paddingVertical: spacing['2xl'], alignItems: 'center' }}>
+                <MaterialCommunityIcons name="chart-bar" size={32} color={colors.text.secondary} />
+                <Text style={{ color: colors.text.secondary, marginTop: spacing.base }}>Belum ada data transaksi</Text>
+              </View>
+            )}
+          </View>
+        </>
+      )}
+    </ScrollView>
+  );
+}

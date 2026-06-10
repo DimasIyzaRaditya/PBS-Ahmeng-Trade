@@ -3,12 +3,14 @@ import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 import HomeScreen from '../screens/HomeScreen';
 import ProdukScreen from '../screens/ProdukScreen';
+import TransaksiScreen from '../screens/TransaksiScreen';
 import ProfileScreen from '../screens/ProfileScreen';
 import { colors, typography } from '../styles';
 
 type AppTabParamList = {
   Home: undefined;
   Produk: undefined;
+  Transaksi: undefined;
   Profil: undefined;
 };
 
@@ -49,6 +51,16 @@ export default function AppNavigator() {
           tabBarLabel: 'Produk',
           tabBarIcon: ({ color, size }) => (
             <MaterialCommunityIcons name="package-variant-closed" size={size} color={color} />
+          ),
+        }}
+      />
+      <Tab.Screen
+        name="Transaksi"
+        component={TransaksiScreen}
+        options={{
+          tabBarLabel: 'Transaksi',
+          tabBarIcon: ({ color, size }) => (
+            <MaterialCommunityIcons name="receipt" size={size} color={color} />
           ),
         }}
       />

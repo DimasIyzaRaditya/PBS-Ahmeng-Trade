@@ -22,9 +22,12 @@ export default function ProdukScreen(): React.JSX.Element {
   const [searchQuery, setSearchQuery] = useState<string>('');
 
   useEffect(() => {
+    if (!token) return;
     const fetchProduk = async () => {
+      setLoading(true);
+      setError('');
       try {
-        const res = await apiGetProduk(token ?? '');
+        const res = await apiGetProduk(token);
         setProduk(Array.isArray(res.data) ? res.data : []);
       } catch (e) {
         setError('Gagal memuat produk');
@@ -33,7 +36,7 @@ export default function ProdukScreen(): React.JSX.Element {
       }
     };
     fetchProduk();
-  }, []);
+  }, [token]);
 
   const filteredProduk = searchQuery.trim()
     ? produk.filter(p => p.nama.toLowerCase().includes(searchQuery.toLowerCase()))

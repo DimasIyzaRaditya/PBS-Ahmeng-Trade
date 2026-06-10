@@ -73,3 +73,64 @@ export default function DashboardScreen(): React.JSX.Element {
       return acc;
     }, {} as Record<number, { nama: string; count: number; revenue: number }>)
   ).sort((a, b) => b.revenue - a.revenue).slice(0, 5);
+
+  return (
+    <ScrollView style={commonStyles.container}>
+      {/* Header */}
+      <View style={headerStyles.containerSecondary}>
+        <View style={commonStyles.flexRowBetween}>
+          <View style={headerStyles.logoContainer}>
+            <Image
+              source={require('../../assets/images/logo.png')}
+              style={headerStyles.logo}
+              resizeMode="contain"
+            />
+            <Text style={headerStyles.brandText}>Ahmeng Trade</Text>
+          </View>
+          <Text style={{ color: colors.text.secondary, fontSize: typography.fontSize.sm }}>
+            Halo, {user?.name ?? 'User'}!
+          </Text>
+        </View>
+      </View>
+
+      {loading ? (
+        <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center', paddingTop: spacing['3xl'] }}>
+          <ActivityIndicator size="large" color={colors.text.primary} />
+          <Text style={{ color: colors.text.secondary, marginTop: spacing.base }}>Memuat dashboard...</Text>
+        </View>
+      ) : error ? (
+        <View style={{ padding: spacing.lg }}>
+          <Text style={{ color: colors.status.error }}>{error}</Text>
+        </View>
+      ) : (
+        <>
+          {/* Stat Cards */}
+          <View style={{ paddingHorizontal: spacing.lg, paddingTop: spacing['2xl'] }}>
+            <Text style={{ fontSize: typography.fontSize.lg, fontWeight: typography.fontWeight.bold, color: colors.text.primary, marginBottom: spacing.lg }}>
+              Ringkasan
+            </Text>
+            <View style={{ flexDirection: 'row', gap: spacing.base, marginBottom: spacing.base }}>
+              <View style={[cardStyles.container, { flex: 1 }]}>
+                <MaterialCommunityIcons name="account-group-outline" size={22} color={colors.text.secondary} />
+                <Text style={{ color: colors.text.secondary, fontSize: typography.fontSize.sm, marginTop: spacing.xs }}>Total User</Text>
+                <Text style={{ color: colors.text.primary, fontSize: typography.fontSize['2xl'], fontWeight: typography.fontWeight.bold }}>{users.length}</Text>
+              </View>
+              <View style={[cardStyles.container, { flex: 1 }]}>
+                <MaterialCommunityIcons name="package-variant-closed" size={22} color={colors.text.secondary} />
+                <Text style={{ color: colors.text.secondary, fontSize: typography.fontSize.sm, marginTop: spacing.xs }}>Total Produk</Text>
+                <Text style={{ color: colors.text.primary, fontSize: typography.fontSize['2xl'], fontWeight: typography.fontWeight.bold }}>{produk.length}</Text>
+              </View>
+            </View>
+            <View style={{ flexDirection: 'row', gap: spacing.base }}>
+              <View style={[cardStyles.container, { flex: 1 }]}>
+                <MaterialCommunityIcons name="receipt" size={22} color={colors.text.secondary} />
+                <Text style={{ color: colors.text.secondary, fontSize: typography.fontSize.sm, marginTop: spacing.xs }}>Total Transaksi</Text>
+                <Text style={{ color: colors.text.primary, fontSize: typography.fontSize['2xl'], fontWeight: typography.fontWeight.bold }}>{transaksi.length}</Text>
+              </View>
+              <View style={[cardStyles.container, { flex: 1 }]}>
+                <MaterialCommunityIcons name="cash-multiple" size={22} color={colors.text.secondary} />
+                <Text style={{ color: colors.text.secondary, fontSize: typography.fontSize.sm, marginTop: spacing.xs }}>Total Revenue</Text>
+                <Text style={{ color: colors.text.primary, fontSize: typography.fontSize.base, fontWeight: typography.fontWeight.bold }}>{formatRupiah(totalRevenue)}</Text>
+              </View>
+            </View>
+          </View>

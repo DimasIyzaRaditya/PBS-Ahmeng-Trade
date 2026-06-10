@@ -99,3 +99,64 @@ export default function TransaksiScreen(): React.JSX.Element {
           )}
         </View>
       </View>
+
+      {/* Section + Tabel */}
+      <View style={sectionStyles.container}>
+        <Text style={sectionStyles.title}>Daftar Transaksi</Text>
+        <Text style={sectionStyles.subtitle}>Semua transaksi yang tercatat</Text>
+
+        {/* Table Header */}
+        <View style={tableStyles.header}>
+          <Text style={[tableStyles.headerText, { flex: 1 }]}>Produk / Pembeli</Text>
+          <Text style={[tableStyles.headerText, { width: 110, textAlign: 'right' }]}>Total</Text>
+        </View>
+
+        {/* Table Body */}
+        {loading ? (
+          <View style={tableStyles.loadingState}>
+            <ActivityIndicator size="large" color={colors.text.primary} />
+            <Text style={{ color: colors.text.secondary, marginTop: spacing.base }}>Memuat transaksi...</Text>
+          </View>
+        ) : error ? (
+          <View style={tableStyles.emptyState}>
+            <MaterialCommunityIcons name="alert-circle-outline" size={32} color={colors.status.error} style={{ marginBottom: spacing.base }} />
+            <Text style={{ color: colors.status.error, fontSize: typography.fontSize.base }}>{error}</Text>
+          </View>
+        ) : filteredTransaksi.length > 0 ? (
+          filteredTransaksi.map((item, index) => (
+            <View
+              key={item.id}
+              style={[
+                tableStyles.row,
+                index % 2 === 0 ? tableStyles.rowEven : tableStyles.rowOdd,
+                {
+                  borderBottomWidth: index === filteredTransaksi.length - 1 ? 0 : 1,
+                  borderBottomColor: colors.border.primary,
+                  borderBottomLeftRadius: index === filteredTransaksi.length - 1 ? borderRadius.md : 0,
+                  borderBottomRightRadius: index === filteredTransaksi.length - 1 ? borderRadius.md : 0,
+                },
+              ]}
+            >
+              <View style={{ flex: 1 }}>
+                <Text style={[tableStyles.cellText, { fontWeight: typography.fontWeight.semibold }]}>
+                  {getNamaProduk(item.produkId)}
+                </Text>
+                <Text style={{ color: colors.text.secondary, fontSize: typography.fontSize.sm }}>
+                  {item.namaPembeli}
+                </Text>
+              </View>
+              <Text style={[tableStyles.cellText, { width: 110, textAlign: 'right' }]}>
+                {formatRupiah(item.totalHarga)}
+              </Text>
+            </View>
+          ))
+        ) : (
+          <View style={tableStyles.emptyState}>
+            <MaterialCommunityIcons name="receipt" size={32} color={colors.text.secondary} style={{ marginBottom: spacing.base }} />
+            <Text style={{ color: colors.text.secondary }}>Belum ada transaksi</Text>
+          </View>
+        )}
+      </View>
+    </ScrollView>
+  );
+}
